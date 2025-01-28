@@ -1,3 +1,5 @@
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SleepLog from "./SleepLog"
 
 function App() {
@@ -22,7 +24,9 @@ function App() {
                 id="main"
                 className="flex flex-col justify-center items-center space-y-4 py-10 max-w-lg mx-auto"
             >
-                <SleepLog />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <SleepLog />
+                </LocalizationProvider>
             </main>
         </>
     )
