@@ -175,7 +175,7 @@ export default function SleepLog() {
                                         <label className="block text-sm font-bold" htmlFor="time-asleep">Sleep duration in bed:</label>
                                         <input
                                             id="time-asleep"
-                                            className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
+                                            className="cursor-not-allowed py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
                                             type="text"
                                             readOnly
                                             value={`${totalSleep?.toFixed(1)} hours`}
@@ -185,7 +185,7 @@ export default function SleepLog() {
                                         <label className="block text-sm font-bold" htmlFor="time-in-bed">Time spent in bed:</label>
                                         <input
                                             id="time-in-bed"
-                                            className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
+                                            className="cursor-not-allowed py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
                                             type="text"
                                             readOnly
                                             value={`${timeInBed?.toFixed(1)} hours`}
@@ -195,7 +195,7 @@ export default function SleepLog() {
                                         <label className="block text-sm font-bold" htmlFor="sleep-efficiency">Sleep efficiency:</label>
                                         <input
                                             id="sleep-efficiency"
-                                            className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
+                                            className="cursor-not-allowed py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
                                             type="text"
                                             readOnly
                                             value={`${sleepEfficiency?.toFixed(2)}%`}
