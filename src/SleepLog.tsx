@@ -49,17 +49,18 @@ export default function SleepLog() {
     }
 
     return (
-        <>
-            <form onSubmit={handleFormSubmit} className="w-full space-y-4">
+        <div className="grid grid-cols-2 gap-x-6">
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+                <h2 className="text-2xl border-b border-gray-500">Sleep Form:</h2>
                 <div>
-                    <p>What time did you get into bed?</p>
+                    <p className="text-sm font-bold">What time did you get into bed?</p>
                     <DateTimePicker
                         value={sleepLog.inBedTime}
                         onChange={(v) => handleDateChange("inBedTime", v)}
                     />
                 </div>
                 <div>
-                    <p>About what time did you fall asleep?</p>
+                    <p className="text-sm font-bold">What time did you fall asleep?</p>
                     <DateTimePicker
                         value={sleepLog.fallAsleep}
                         onChange={(v) => handleDateChange("fallAsleep", v)}
@@ -67,7 +68,7 @@ export default function SleepLog() {
                     />
                 </div>
                 <div>
-                    <p>What time did you awake?</p>
+                    <p className="text-sm font-bold">What time did you awake?</p>
                     <DateTimePicker
                         value={sleepLog.timeAwake}
                         onChange={(v) => handleDateChange("timeAwake", v)}
@@ -75,7 +76,7 @@ export default function SleepLog() {
                     />
                 </div>
                 <div>
-                    <p>What time did you get out of bed?</p>
+                    <p className="text-sm font-bold">What time did you get out of bed?</p>
                     <DateTimePicker
                         value={sleepLog.outOfBed}
                         onChange={(v) => handleDateChange("outOfBed", v)}
@@ -83,10 +84,10 @@ export default function SleepLog() {
                     />
                 </div>
                 <div>
-                    <label className="block" htmlFor="total-time-awake">Time awake in bed (in hours):</label>
+                    <label className="block text-sm font-bold" htmlFor="total-time-awake">Time awake in bed (in hours):</label>
                     <input
                         id="total-time-awake"
-                        className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded"
+                        className="py-3.5 pl-3.5 pr-2.5 border border-gray-400 rounded"
                         name="totalTimeAwake"
                         type="number"
                         step="0.1"
@@ -95,11 +96,11 @@ export default function SleepLog() {
                     />
                 </div>
                 <div>
-                    <label className="block" htmlFor="sleep-quality">Quality of sleep:</label>
+                    <label className="block text-sm font-bold" htmlFor="sleep-quality">Quality of sleep:</label>
                     <select
                         name="sleepQuality"
                         id="sleep-quality"
-                        className="py-3.5 pl-3.5 pr-4 border border-gray-400 rounded"
+                        className="py-4 pl-3.5 pr-1 border border-gray-400 rounded"
                         value={sleepLog.sleepQuality}
                         onChange={handleSelectChange}
                     >
@@ -111,8 +112,11 @@ export default function SleepLog() {
                         <option value="very good">Very Good</option>
                     </select>
                 </div>
+            </form>
+            <div className="space-y-4">
+                <h2 className="text-2xl border-b border-gray-500">Calculated Stats:</h2>
                 <div>
-                    <label className="block" htmlFor="time-asleep">Time asleep in bed:</label>
+                    <label className="block text-sm font-bold" htmlFor="time-asleep">Time asleep in bed:</label>
                     <input
                         id="time-asleep"
                         className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
@@ -122,7 +126,7 @@ export default function SleepLog() {
                     />
                 </div>
                 <div>
-                    <label className="block" htmlFor="time-in-bed">Time spent in bed:</label>
+                    <label className="block text-sm font-bold" htmlFor="time-in-bed">Time spent in bed:</label>
                     <input
                         id="time-in-bed"
                         className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
@@ -132,7 +136,7 @@ export default function SleepLog() {
                     />
                 </div>
                 <div>
-                    <label className="block" htmlFor="sleep-efficiency">Sleep efficiency:</label>
+                    <label className="block text-sm font-bold" htmlFor="sleep-efficiency">Sleep efficiency:</label>
                     <input
                         id="sleep-efficiency"
                         className="py-3.5 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
@@ -141,7 +145,7 @@ export default function SleepLog() {
                         value={`${sleepEfficiency?.toFixed(1)}%`}
                     />
                 </div>
-            </form>
-        </>
+            </div>
+        </div>
     )
 }
