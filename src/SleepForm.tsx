@@ -1,5 +1,5 @@
 import type { ChangeEvent, FormEvent } from "react"
-import type { Dayjs } from 'dayjs';
+import type { Dayjs, SleepLog, SleepEntry } from "./types";
 import { useState } from "react"
 import { createPortal } from 'react-dom'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -8,19 +8,6 @@ import AddIcon from "./AddIcon";
 import SaveIcon from "./SaveIcon";
 import CancelIcon from "./CancelIcon";
 import ReadOnlyTextInput from "./ReadyOnlyTextInput";
-
-type SleepLog = {
-    inBedTime: Dayjs | null
-    fallAsleep: Dayjs | null
-    timeAwake: Dayjs | null
-    outOfBed: Dayjs | null
-    totalTimeAwake: number
-    sleepQuality: string
-    napTime: number
-    notes: string
-}
-
-type SleepEntry = SleepLog & { id: number, totalSleep: number, sleepEfficiency: number };
 
 const initialDate = dayjs()
 const initialState = {
