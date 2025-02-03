@@ -1,6 +1,7 @@
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import SleepForm from "./SleepForm"
+import SleepEntries from './SleepEntries';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 id="main"
                 className="flex flex-col justify-center items-center space-y-4 py-10 max-w-lg mx-auto"
             >
+                <SleepEntries />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <SleepForm />
                 </LocalizationProvider>
