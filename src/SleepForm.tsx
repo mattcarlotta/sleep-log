@@ -4,32 +4,34 @@ import { useState } from "react"
 import { createPortal } from 'react-dom'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
-import AddIcon from "./AddIcon";
 import SaveIcon from "./SaveIcon";
 import CancelIcon from "./CancelIcon";
 import ReadOnlyTextInput from "./ReadyOnlyTextInput";
 
-const initialDate = dayjs()
-const initialState = {
-    id: initialDate,
-    inBedTime: initialDate.subtract(1, "day").startOf("day"),
-    fallAsleep: initialDate.subtract(1, "day").endOf("day"),
-    timeAwake: initialDate,
-    outOfBed: initialDate,
-    totalTimeAwake: 0.00,
-    sleepQuality: "",
-    napTime: 0,
-    notes: "",
-}
-
 export type SleepLogProps = {
+    id: Dayjs | null,
+    inBedTime: Dayjs | null
+    fallAsleep: Dayjs | null
+    timeAwake: Dayjs | null
+    outOfBed: Dayjs | null
+    totalTimeAwake: number
+    sleepQuality: string,
+    napTime: number,
+    notes: string,
+    isEditing: boolean
     onSetSleepEntries: (entry: Array<SleepEntry>) => void;
-    onShowForm: (f: boolean) => void;
-    showForm: boolean;
+    onFormCancel: () => void;
 }
 
-export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: SleepLogProps) {
-    const [sleepLog, setSleepLog] = useState<SleepLog>(initialState);
+export default function SleepLog(
+    {
+        onFormCancel,
+        onSetSleepEntries,
+        isEditing,
+        ...formFields
+    }: SleepLogProps
+) {
+    const [sleepLog, setSleepLog] = useState<SleepLog>(formFields);
     const [formError, setFormError] = useState("");
 
     const timeInBed = sleepLog.outOfBed ? sleepLog.outOfBed.diff(sleepLog.inBedTime, "hours", true) : 0;
@@ -48,12 +50,6 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
         setSleepLog(p => ({ ...p, [name]: value }));
     }
 
-    const handleCancelForm = () => {
-        setSleepLog(initialState);
-        onShowForm(false);
-        setFormError("");
-    }
-
     const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
         setFormError("");
@@ -62,31 +58,25 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
                 throw new Error("You must choose a quality of sleep option!");
             }
 
-            const sleepEntries: Array<SleepEntry> = JSON.parse(localStorage.getItem("entries") || "[]");
+            let sleepEntries: Array<SleepEntry> = JSON.parse(localStorage.getItem("entries") || "[]");
             const entryId = dayjs(sleepLog.id).startOf("day").valueOf();
-            if (sleepEntries.some(({ id }) => id === entryId)) {
+            if (sleepEntries.some(({ id }) => id === entryId) && !isEditing) {
                 throw new Error(`An entry for ${dayjs(entryId).format("MM/DD/YYYY")} already exists!`);
             }
 
-            sleepEntries.push({ ...sleepLog, id: entryId, timeInBed, totalSleep, sleepEfficiency });
+            if (isEditing) {
+                sleepEntries = sleepEntries.map(e => e.id === entryId ? { ...sleepLog, id: entryId, timeInBed, totalSleep, sleepEfficiency } : e)
+            } else {
+                sleepEntries.push({ ...sleepLog, id: entryId, timeInBed, totalSleep, sleepEfficiency });
+            }
+
+            sleepEntries.sort((a, b) => a.id - b.id);
+
             localStorage.setItem("entries", JSON.stringify(sleepEntries));
             onSetSleepEntries(sleepEntries);
-            handleCancelForm();
         } catch (error) {
             setFormError(`Unable to save entry. Reason: ${(error as Error)?.message}`);
         }
-    }
-
-    if (!showForm) {
-        return (
-            <button
-                type="button"
-                className="absolute bottom-4 right-4 text-2xl rounded-full p-3.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700"
-                onClick={() => onShowForm(true)}
-            >
-                <AddIcon className="h-8 w-8" />
-            </button>
-        )
     }
 
     return (
@@ -104,8 +94,8 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
                                 <button
                                     type="button"
                                     title="Cancel"
-                                    className="cursor-pointer rounded p-3 transition-all hover:text-red-500"
-                                    onClick={handleCancelForm}
+                                    className="cursor-pointer rounded p-3 transition-all hover:bg-gray-300"
+                                    onClick={onFormCancel}
                                 >
                                     <CancelIcon className="h-6 w-6" />
                                 </button>
@@ -117,6 +107,7 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
                                     <div>
                                         <p className="text-sm font-bold">What day is this entry for?</p>
                                         <DateTimePicker
+                                            readOnly={isEditing}
                                             value={sleepLog.id}
                                             onChange={(v) => handleDateChange("id", v)}
                                             views={['year', 'month', 'day']}
@@ -134,7 +125,7 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
                                         <DateTimePicker
                                             value={sleepLog.fallAsleep}
                                             onChange={(v) => handleDateChange("fallAsleep", v)}
-                                            minDateTime={sleepLog.inBedTime || initialDate}
+                                            minDateTime={sleepLog.inBedTime}
                                         />
                                     </div>
                                     <div>
@@ -142,7 +133,7 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
                                         <DateTimePicker
                                             value={sleepLog.timeAwake}
                                             onChange={(v) => handleDateChange("timeAwake", v)}
-                                            minDateTime={sleepLog.fallAsleep || initialDate}
+                                            minDateTime={sleepLog.fallAsleep}
                                         />
                                     </div>
                                     <div>
@@ -150,7 +141,7 @@ export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: Sl
                                         <DateTimePicker
                                             value={sleepLog.outOfBed}
                                             onChange={(v) => handleDateChange("outOfBed", v)}
-                                            minDateTime={sleepLog.timeAwake || initialDate}
+                                            minDateTime={sleepLog.timeAwake}
                                         />
                                     </div>
                                     <div>
