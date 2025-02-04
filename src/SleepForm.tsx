@@ -11,6 +11,7 @@ import ReadOnlyTextInput from "./ReadyOnlyTextInput";
 
 const initialDate = dayjs()
 const initialState = {
+    id: initialDate,
     inBedTime: initialDate.subtract(1, "day").startOf("day"),
     fallAsleep: initialDate.subtract(1, "day").endOf("day"),
     timeAwake: initialDate,
@@ -21,8 +22,13 @@ const initialState = {
     notes: "",
 }
 
-export default function SleepLog() {
-    const [showForm, setShowForm] = useState(false);
+export type SleepLogProps = {
+    onSetSleepEntries: (entry: Array<SleepEntry>) => void;
+    onShowForm: (f: boolean) => void;
+    showForm: boolean;
+}
+
+export default function SleepLog({ onSetSleepEntries, onShowForm, showForm }: SleepLogProps) {
     const [sleepLog, setSleepLog] = useState<SleepLog>(initialState);
     const [formError, setFormError] = useState("");
 
@@ -44,7 +50,7 @@ export default function SleepLog() {
 
     const handleCancelForm = () => {
         setSleepLog(initialState);
-        setShowForm(false);
+        onShowForm(false);
         setFormError("");
     }
 
@@ -57,13 +63,14 @@ export default function SleepLog() {
             }
 
             const sleepEntries: Array<SleepEntry> = JSON.parse(localStorage.getItem("entries") || "[]");
-            const entryId = dayjs(sleepLog.timeAwake).startOf("day").valueOf();
+            const entryId = dayjs(sleepLog.id).startOf("day").valueOf();
             if (sleepEntries.some(({ id }) => id === entryId)) {
                 throw new Error(`An entry for ${dayjs(entryId).format("MM/DD/YYYY")} already exists!`);
             }
 
-            sleepEntries.push({ ...sleepLog, id: entryId, totalSleep, sleepEfficiency });
+            sleepEntries.push({ ...sleepLog, id: entryId, timeInBed, totalSleep, sleepEfficiency });
             localStorage.setItem("entries", JSON.stringify(sleepEntries));
+            onSetSleepEntries(sleepEntries);
             handleCancelForm();
         } catch (error) {
             setFormError(`Unable to save entry. Reason: ${(error as Error)?.message}`);
@@ -75,7 +82,7 @@ export default function SleepLog() {
             <button
                 type="button"
                 className="absolute bottom-4 right-4 text-2xl rounded-full p-3.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700"
-                onClick={() => setShowForm(true)}
+                onClick={() => onShowForm(true)}
             >
                 <AddIcon className="h-8 w-8" />
             </button>
@@ -107,6 +114,14 @@ export default function SleepLog() {
                         <div className="flex-1 space-y-5 overflow-y-auto bg-gray-50 p-5 relative !overflow-x-hidden !bg-white sm:h-auto">
                             <div className="grid grid-cols-2 gap-x-6">
                                 <form onSubmit={handleFormSubmit} className="space-y-4">
+                                    <div>
+                                        <p className="text-sm font-bold">What day is this entry for?</p>
+                                        <DateTimePicker
+                                            value={sleepLog.id}
+                                            onChange={(v) => handleDateChange("id", v)}
+                                            views={['year', 'month', 'day']}
+                                        />
+                                    </div>
                                     <div>
                                         <p className="text-sm font-bold">What time did you get into bed?</p>
                                         <DateTimePicker

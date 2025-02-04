@@ -1,7 +1,4 @@
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import SleepForm from "./SleepForm"
-import SleepEntries from './SleepEntries';
+import SleepLog from "./SleepLog"
 
 function App() {
     return (
@@ -23,12 +20,9 @@ function App() {
             </header>
             <main
                 id="main"
-                className="flex flex-col justify-center items-center space-y-4 py-10 max-w-lg mx-auto"
+                className="flex flex-wrap space-x-8 justify-center items-center space-y-4 py-10"
             >
-                <SleepEntries />
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <SleepForm />
-                </LocalizationProvider>
+                <SleepLog />
             </main>
         </>
     )

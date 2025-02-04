@@ -1,6 +1,7 @@
 export type { Dayjs } from 'dayjs';
 
 export type SleepLog = {
+    id: Dayjs | null
     inBedTime: Dayjs | null
     fallAsleep: Dayjs | null
     timeAwake: Dayjs | null
@@ -11,5 +12,5 @@ export type SleepLog = {
     notes: string
 }
 
-export type SleepEntry = SleepLog & { id: number, totalSleep: number, sleepEfficiency: number };
+export type SleepEntry = SleepLog & { id: number, timeInBed: number, totalSleep: number, sleepEfficiency: number };
 
