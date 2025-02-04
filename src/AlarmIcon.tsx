@@ -10,5 +10,5 @@ export default function AlarmIcon({ className }: { className?: string }) {
                 strokeLinejoin="round"
             />
         </svg>
-    )
+    );
 }

@@ -9,5 +9,5 @@ export default function SaveIcon({ className }: { className?: string }) {
                 clipRule="evenodd"
             />
         </svg>
-    )
+    );
 }

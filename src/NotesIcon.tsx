@@ -10,6 +10,5 @@ export default function NotesIcon({ className }: { className?: string }) {
                 strokeLinejoin="round"
             />
         </svg>
-    )
+    );
 }
-

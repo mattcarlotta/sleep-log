@@ -10,7 +10,5 @@ export default function DeleteIcon({ className }: { className?: string }) {
                 strokeLinejoin="round"
             />
         </svg>
-    )
+    );
 }
-
-

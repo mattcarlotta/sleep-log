@@ -1,4 +1,4 @@
-import SleepLog from "./SleepLog"
+import SleepLog from './SleepLog';
 
 function App() {
     return (
@@ -13,19 +13,14 @@ function App() {
             </a>
             <header id="sleep-log" className="text-center border-b border-gray-500 py-4">
                 <section>
-                    <h1 className="text-3xl font-extrabold xs:text-4xl">
-                        Sleep Log
-                    </h1>
+                    <h1 className="text-3xl font-extrabold xs:text-4xl">Sleep Log</h1>
                 </section>
             </header>
-            <main
-                id="main"
-                className="flex flex-wrap space-x-8 justify-center items-center space-y-4 py-10"
-            >
+            <main id="main" className="flex flex-wrap space-x-8 justify-center items-center space-y-4 py-10">
                 <SleepLog />
             </main>
         </>
-    )
+    );
 }
 
-export default App
+export default App;

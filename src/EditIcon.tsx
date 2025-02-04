@@ -9,6 +9,5 @@ export default function EditIcon({ className }: { className?: string }) {
                 clipRule="evenodd"
             />
         </svg>
-    )
+    );
 }
-

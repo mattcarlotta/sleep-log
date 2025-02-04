@@ -10,5 +10,5 @@ export default function InBedIcon({ className }: { className?: string }) {
                 strokeLinejoin="round"
             />
         </svg>
-    )
+    );
 }

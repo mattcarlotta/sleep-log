@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
     --background: #f7f7f7;
@@ -11,8 +11,6 @@
 /*         --foreground: #ededed; */
 /*     } */
 /* } */
-
-
 
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -35,7 +33,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-input[type=number] {
+input[type='number'] {
     appearance: textfield;
     -moz-appearance: textfield;
 }

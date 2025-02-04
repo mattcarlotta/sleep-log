@@ -18,6 +18,5 @@ export default function AsleepIcon({ className }: { className?: string }) {
                 strokeLinejoin="round"
             />
         </svg>
-    )
+    );
 }
-
