@@ -119,12 +119,12 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
                         </p>
                         <p>
                             <TimeAwakeIcon className="h-10 w-10" />
-                            <span className="text-lg">{entry.totalTimeAwake?.toFixed(1)}</span>
+                            <span className="text-2xl">{entry.totalTimeAwake?.toFixed(1)}</span>
                             <sup>hrs</sup>
                         </p>
                         <p>
                             <NapIcon className="h-10 w-10" />
-                            <span className="text-lg">{entry.napTime?.toFixed(1)}</span>
+                            <span className="text-2xl">{entry.napTime?.toFixed(1)}</span>
                             <sup>hrs</sup>
                         </p>
                     </div>
