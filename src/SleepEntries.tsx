@@ -15,6 +15,7 @@ import SleepEfficiencyIcon from './SleepEfficiencyIcon';
 import EditIcon from './EditIcon';
 import DeleteIcon from './DeleteIcon';
 import TimeAwakeIcon from './TimeAwakeIcon';
+import AddIcon from './AddIcon';
 
 export type SleepEntriesProps = {
     entries: Array<SleepEntry>;
@@ -25,14 +26,23 @@ export type SleepEntriesProps = {
 export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: SleepEntriesProps) {
     if (!entries.length) {
         return (
-            <div className="p-4 rounded bg-gray-200 text-gray-600 border border-gray-300">
+            <div className="flex flex-col space-y-1.5 p-4 rounded bg-gray-200 text-gray-600 border border-gray-300 mt-8 mx-2">
                 <div className="flex justify-center items-center">
                     <EmptyEntriesIcon className="h-10 w-10 fill-gray-600" />
                 </div>
                 <header id="sleep-entries">
-                    <h2 className="text-lg text-center font-bold">No Sleep Entries Found</h2>
+                    <h2 className="text-xl text-center font-bold md:text-2xl">Empty Sleep Entries</h2>
                 </header>
-                <p>To add a sleep entry press the plus button below.</p>
+                <p className="text-sm tracking-wider sm:text-base">
+                    To add an entry, press the
+                    <button
+                        type="button"
+                        className="rounded-full p-1.5 mx-1.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl"
+                    >
+                        <AddIcon className="h-4 w-4" />
+                    </button>
+                    button.
+                </p>
             </div>
         );
     }

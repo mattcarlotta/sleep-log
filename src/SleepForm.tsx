@@ -98,7 +98,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                             <button
                                 type="button"
                                 title="Cancel"
-                                className="cursor-pointer rounded p-3 transition-all hover:bg-black/30 hover:text-red-500"
+                                className="cursor-pointer rounded p-3 transition-all hover:bg-black/30 hover:text-black/50"
                                 onClick={onFormCancel}
                             >
                                 <CancelIcon className="h-6 w-6" />
@@ -236,7 +236,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                         className="w-full flex justify-center items-center cursor-pointer rounded bg-blue-600 p-2.5 text-white text-lg font-semibold hover:bg-blue-700"
                                     >
                                         <SaveIcon className="h-6 w-6" />
-                                        &nbsp;Save Entry
+                                        &nbsp;{isEditing ? "Update" : "Save"} Entry
                                     </button>
                                 </div>
                             </form>
