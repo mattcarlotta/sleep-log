@@ -51,7 +51,7 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {entries.map((entry) => (
                 <div
-                    className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-64 shadow-md"
+                    className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-full shadow-md md:w-64"
                     key={entry.id}
                 >
                     <header id="sleep-entries" className="grid grid-cols-2">

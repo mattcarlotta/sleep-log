@@ -63,9 +63,9 @@ export default function SleepLog() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 md:py-6 md:space-x-8">
+        <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 mx-4 md:py-6 md:space-x-8">
             {sleepEffiencyToDate > 0 && (
-                <div className="flex flex-col items-center space-y-2 px-4 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center w-64">
+                <div className="flex flex-col items-center space-y-2 px-6 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center md:w-64">
                     <header id="sleep-efficiency-score">
                         <h2 className="text-2xl font-bold">Sleep Efficiency</h2>
                     </header>
