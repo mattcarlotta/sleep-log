@@ -80,7 +80,7 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
                     <div className="grid grid-cols-2 gap-x-10 gap-y-4 px-4">
                         <p className="font-bold">
                             <SleepEfficiencyIcon className="h-10 w-10" />
-                            <span className="text-2xl">{Math.floor(entry.sleepEfficiency)}</span>
+                            <span className="text-2xl">{Math.round(entry.sleepEfficiency)}</span>
                             <sup>%</sup>
                         </p>
                         <p className="font-bold capitalize">

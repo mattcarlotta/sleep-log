@@ -18,7 +18,7 @@ export default function SleepLog() {
     const sleepEffiencyToDate = useMemo(() => {
         const sE = sleepEntries.reduce((sum, e) => (sum += e.sleepEfficiency), 0.0);
         if (!sE) return 0;
-        return Math.ceil(sE / sleepEntries.length);
+        return Math.round(sE / sleepEntries.length);
     }, [sleepEntries]);
 
     const handleFormCancel = () => {

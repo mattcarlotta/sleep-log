@@ -254,7 +254,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                 <ReadOnlyTextInput
                                     id="sleep-efficiency"
                                     label="Sleep efficiency:"
-                                    value={`${sleepEfficiency?.toFixed()}%`}
+                                    value={`${Math.round(sleepEfficiency)}%`}
                                 />
                             </div>
                         </div>
