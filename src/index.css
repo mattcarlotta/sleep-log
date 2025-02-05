@@ -19,7 +19,10 @@
 
     /* color-scheme: light dark; */
     color: var(--foreground);
-    background: var(--background);
+    /* background: var(--background); */
+    background-image: radial-gradient(circle at 0 100%, #d8eedc, #fff0 50%),
+        radial-gradient(circle at 100% 100%, #e2e1ff, #fff0 50%);
+    height: 100vh;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

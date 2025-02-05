@@ -29,7 +29,7 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
                 <div className="flex justify-center items-center">
                     <EmptyEntriesIcon className="h-10 w-10 fill-gray-600" />
                 </div>
-                <header>
+                <header id="sleep-entries">
                     <h2 className="text-lg text-center font-bold">No Sleep Entries Found</h2>
                 </header>
                 <p>To add a sleep entry press the plus button below.</p>
@@ -41,10 +41,10 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
         <>
             {entries.map((entry) => (
                 <div
-                    className="flex flex-col space-y-2 px-4 py-2.5 rounded border border-gray-300 w-64 bg-gray-200 shadow-lg"
+                    className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-64 shadow-md"
                     key={entry.id}
                 >
-                    <header className="grid grid-cols-2">
+                    <header id="sleep-entries" className="grid grid-cols-2">
                         <h2 className="text-2xl font-bold">{daysInWeek[dayjs(entry.id).day()]}&nbsp;</h2>
                         <div className="flex items-center justify-end space-x-2">
                             <button
@@ -64,17 +64,18 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
                                 <DeleteIcon className="h-6 w-6 text-red-500" />
                             </button>
                         </div>
+                        <h3 className="text-lg">{dayjs(entry.id).format('MMM Do')}</h3>
                     </header>
-                    <h3 className="text-lg">{dayjs(entry.id).format('MMM Do')}</h3>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-3 pt-2 px-4 border-t border-gray-300">
-                        <p>
+                    <div className="h-px border-t border-green-700 pt-2" />
+                    <div className="grid grid-cols-2 gap-x-10 gap-y-4 px-4">
+                        <p className="font-bold">
                             <SleepEfficiencyIcon className="h-10 w-10" />
                             <span className="text-2xl">{Math.floor(entry.sleepEfficiency)}</span>
-                            <sup>{Math.round((entry.sleepEfficiency - Math.floor(entry.sleepEfficiency)) * 100)}%</sup>
+                            <sup>%</sup>
                         </p>
-                        <p>
+                        <p className="font-bold capitalize">
                             <SleepQualityIcon className="h-10 w-10" />
-                            <span className="text-2xl">{entry.sleepQuality}</span>
+                            <span>{entry.sleepQuality}</span>
                         </p>
                         <p>
                             <InBedIcon className="h-10 w-10" />
@@ -117,9 +118,10 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
                             <sup>hrs</sup>
                         </p>
                     </div>
-                    <div className="space-y-1 px-4">
-                        <NotesIcon className="h-10 w-10" />
-                        <p className="text-sm p-1 h-14 overflow-y-auto bg-gray-300 border border-gray-400 rounded">
+                    <div className="h-px border-t border-green-700 pt-2" />
+                    <div className="flex px-4">
+                        <NotesIcon className="flex-none h-8 w-8" />
+                        <p className="w-full text-sm h-10 overflow-x-auto">
                             {entry.notes.length ? (
                                 <span className="text-black">{entry.notes}</span>
                             ) : (
