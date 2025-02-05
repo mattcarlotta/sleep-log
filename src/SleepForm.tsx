@@ -2,7 +2,8 @@ import type { ChangeEvent, FormEvent } from 'react';
 import type { Dayjs, SleepLog, SleepEntry } from './types';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { MobileDatePicker as DatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { MobileDateTimePicker as DateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 import SaveIcon from './SaveIcon';
 import CancelIcon from './CancelIcon';
@@ -85,10 +86,10 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
             <div className="fixed top-0 right-0 bottom-0 left-0 z-[-1] flex items-center justify-center bg-black/70" />
             <div className="h-full flex justify-center items-center">
                 <dialog
-                    className="relative z-50 flex flex-col max-w-xl h-full max-h-full overflow-y-auto sm:h-auto sm:m-4 sm:rounded-md"
+                    className="relative z-50 flex flex-col w-full max-w-xl h-full max-h-full overflow-y-auto sm:h-auto sm:m-4 sm:rounded-md"
                     aria-modal="true"
                 >
-                    <div className="flex flex-row items-center border-b border-gray-300 bg-linear-to-r/decreasing from-indigo-500 to-teal-400">
+                    <div className="flex flex-row items-center border-b border-gray-300 bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100">
                         <div className="h-14 p-4 w-14" />
                         <header id="sleep-log-form" className="flex-1 py-2">
                             <h2 className="text-2xl text-center text-gray-50 font-bold">Sleep Log Entry</h2>
@@ -105,20 +106,21 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                         </div>
                     </div>
                     <div className="flex-1 space-y-5 overflow-y-auto bg-gray-50 p-5 relative overflow-x-hidden bg-white sm:h-auto">
-                        <div className="grid grid-cols-2 gap-x-6">
+                        <div className="flex flex-col justify-center items-center space-x-6 md:space-x-0 sm:items-start sm:grid sm:grid-cols-2 md:gap-x-6">
                             <form onSubmit={handleFormSubmit} className="space-y-4">
                                 <div>
                                     <p className="text-sm font-bold">What day is this entry for?</p>
-                                    <DateTimePicker
+                                    <DatePicker
+                                        className="w-full"
                                         readOnly={isEditing}
                                         value={sleepLog.id}
                                         onChange={(v) => handleDateChange('id', v)}
-                                        views={['year', 'month', 'day']}
                                     />
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold">What time did you get into bed?</p>
                                     <DateTimePicker
+                                        className="w-full"
                                         value={sleepLog.inBedTime}
                                         onChange={(v) => handleDateChange('inBedTime', v)}
                                     />
@@ -126,6 +128,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                 <div>
                                     <p className="text-sm font-bold">What time did you fall asleep?</p>
                                     <DateTimePicker
+                                        className="w-full"
                                         value={sleepLog.fallAsleep}
                                         onChange={(v) => handleDateChange('fallAsleep', v)}
                                         minDateTime={sleepLog.inBedTime}
@@ -134,6 +137,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                 <div>
                                     <p className="text-sm font-bold">What time did you awake?</p>
                                     <DateTimePicker
+                                        className="w-full"
                                         value={sleepLog.timeAwake}
                                         onChange={(v) => handleDateChange('timeAwake', v)}
                                         minDateTime={sleepLog.fallAsleep}
@@ -142,6 +146,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                 <div>
                                     <p className="text-sm font-bold">What time did you get out of bed?</p>
                                     <DateTimePicker
+                                        className="w-full"
                                         value={sleepLog.outOfBed}
                                         onChange={(v) => handleDateChange('outOfBed', v)}
                                         minDateTime={sleepLog.timeAwake}
@@ -206,6 +211,24 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                         onChange={handleFieldChange}
                                     />
                                 </div>
+                                <ReadOnlyTextInput
+                                    className="sm:hidden"
+                                    id="time-asleep"
+                                    label="Sleep duration in bed:"
+                                    value={`${totalSleep?.toFixed(1)} hours`}
+                                />
+                                <ReadOnlyTextInput
+                                    className="sm:hidden"
+                                    id="time-in-bed"
+                                    label="Time spent in bed:"
+                                    value={`${timeInBed?.toFixed(1)} hours`}
+                                />
+                                <ReadOnlyTextInput
+                                    className="sm:hidden"
+                                    id="sleep-efficiency"
+                                    label="Sleep efficiency:"
+                                    value={`${sleepEfficiency?.toFixed()}%`}
+                                />
                                 {formError.length > 0 && <p className="text-red-500 font-semibold">{formError}</p>}
                                 <div>
                                     <button
@@ -217,7 +240,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                     </button>
                                 </div>
                             </form>
-                            <div className="space-y-4">
+                            <div className="hidden sm:block space-y-4">
                                 <ReadOnlyTextInput
                                     id="time-asleep"
                                     label="Sleep duration in bed:"
@@ -231,7 +254,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                                 <ReadOnlyTextInput
                                     id="sleep-efficiency"
                                     label="Sleep efficiency:"
-                                    value={`${sleepEfficiency?.toFixed(2)}%`}
+                                    value={`${sleepEfficiency?.toFixed()}%`}
                                 />
                             </div>
                         </div>

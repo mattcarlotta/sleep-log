@@ -1,12 +1,13 @@
 type ReadOnlyTextInputProps = {
+    className?: string;
     id: string;
     label: string;
     value: string;
 };
 
-export default function ReadOnlyTextInput({ id, label, value }: ReadOnlyTextInputProps) {
+export default function ReadOnlyTextInput({ className, id, label, value }: ReadOnlyTextInputProps) {
     return (
-        <div>
+        <div className={className}>
             <label className="block text-sm font-bold" htmlFor={id}>
                 {label}
             </label>

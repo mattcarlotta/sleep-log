@@ -20,14 +20,30 @@
     /* color-scheme: light dark; */
     color: var(--foreground);
     /* background: var(--background); */
-    background-image: radial-gradient(circle at 0 100%, #d8eedc, #fff0 50%),
-        radial-gradient(circle at 100% 100%, #e2e1ff, #fff0 50%);
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 100vh;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+html,
+body,
+main {
+    height: 100vh;
+}
+
+main {
+    background-image: radial-gradient(circle at 0 100%, #d8eedc, #fff0 50%),
+        radial-gradient(circle at 100% 100%, #e2e1ff, #fff0 50%);
 }
 
 input::-webkit-outer-spin-button,
