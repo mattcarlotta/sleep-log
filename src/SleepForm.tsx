@@ -33,7 +33,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
     const sleepEfficiency = totalSleep > 0 ? (totalSleep / timeInBed) * 100 : 0;
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSleepLog((p) => ({ ...p, [e.target.name]: parseFloat(e.target.value || '0') }));
+        setSleepLog((p) => ({ ...p, [e.target.name]: e.target.value ? parseFloat(e.target.value) : "" }));
     };
 
     const handleFieldChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
