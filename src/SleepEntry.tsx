@@ -134,8 +134,8 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                 </div>
             </div>
             {showEntryDetail && (
-                <Modal title={dayjs(entry.id).format('MMM Do')} onCancel={toggleModal}>
-                    <h3 className="text-2xl font-bold text-center">{daysInWeek[dayjs(entry.id).day()]}&nbsp;</h3>
+                <Modal title={daysInWeek[dayjs(entry.id).day()]} onCancel={toggleModal}>
+                    <h3 className="text-2xl font-bold text-center">{dayjs(entry.id).format('MMM Do')}&nbsp;</h3>
                     <div className="h-px border-t border-green-700" />
                     <div className="flex flex-col justify-center items-center">
                         <div className="grid grid-cols-2 gap-x-16 gap-y-4 px-4">
@@ -191,8 +191,8 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                         </div>
                     </div>
                     <div className="h-px border-t border-green-700" />
-                    <div>
-                        <NotesIcon className="float-left h-8 w-8" />
+                    <div className="flex flex-col justify-center items-center">
+                        <NotesIcon className="h-10 w-10" />
                         <p className="text-sm">
                             {entry.notes.length ? (
                                 <span className="text-black">{entry.notes}</span>

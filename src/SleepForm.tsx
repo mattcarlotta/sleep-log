@@ -194,7 +194,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                         value={`${totalSleep?.toFixed(1)} hours`}
                     />
                     <ReadOnlyTextInput
-                        className="sm:hidden"
+                        className="w-full sm:hidden"
                         id="time-in-bed"
                         label="Time spent in bed:"
                         value={`${timeInBed?.toFixed(1)} hours`}
@@ -203,9 +203,9 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                         className="sm:hidden"
                         id="sleep-efficiency"
                         label="Sleep efficiency:"
-                        value={`${sleepEfficiency?.toFixed()}%`}
+                        value={`${Math.round(sleepEfficiency)}%`}
                     />
-                    {formError.length > 0 && <p className="text-red-500 font-semibold">{formError}</p>}
+                    {formError.length > 0 && <p className="text-red-500 font-semibold w-64">{formError}</p>}
                     <div>
                         <button
                             type="submit"
