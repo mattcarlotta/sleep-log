@@ -8,12 +8,15 @@ import { initialState } from './utils';
 import dayjs from 'dayjs';
 import AddIcon from './AddIcon';
 import SleepEfficiencyIcon from './SleepEfficiencyIcon';
+import SortByAscIcon from './SortByAscIcon';
+import SortByDscIcon from './SortByDscIcon';
 
 export default function SleepLog() {
     const [showForm, setShowForm] = useState(false);
     const [sleepEntries, setSleepEntries] = useState<Array<SleepEntry>>([]);
     const [formFields, setFormFields] = useState<SleepLog>(initialState);
     const [isEditing, setIsEditing] = useState(false);
+    const [sortByDsc, setSortByDesc] = useState(false);
 
     const sleepEffiencyToDate = useMemo(() => {
         const sE = sleepEntries.reduce((sum, e) => (sum += e.sleepEfficiency), 0.0);
@@ -38,6 +41,10 @@ export default function SleepLog() {
         setSleepEntries(updatedEntries);
     };
 
+    const handleSortBy = () => {
+        setSortByDesc((p) => !p);
+    };
+
     const handleEditForm = (fields: SleepLog) => {
         setFormFields({
             ...fields,
@@ -52,6 +59,12 @@ export default function SleepLog() {
     };
 
     useEffect(() => {
+        setSleepEntries((prevEntries) =>
+            Array.from(prevEntries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)))
+        );
+    }, [sortByDsc]);
+
+    useEffect(() => {
         try {
             const sleepEntries: Array<SleepEntry> = JSON.parse(localStorage.getItem('entries') || '[]');
             if (!sleepEntries.length) return;
@@ -64,19 +77,28 @@ export default function SleepLog() {
 
     return (
         <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 mx-4 md:py-6 md:space-x-8">
-            {sleepEffiencyToDate > 0 && (
-                <div className="flex flex-col items-center space-y-2 px-6 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center md:w-64">
-                    <header id="sleep-efficiency-score">
-                        <h2 className="text-2xl font-bold">Sleep Efficiency</h2>
-                    </header>
-                    <p className="flex justify-center items-center space-x-2">
-                        <SleepEfficiencyIcon className="h-8 w-8" />
-                        <span className="text-2xl font-bold">
-                            {sleepEffiencyToDate}
-                            <sup>%</sup>
-                        </span>
-                    </p>
-                </div>
+            {sleepEntries.length > 0 && (
+                <>
+                    <div className="flex flex-col items-center space-y-2 px-6 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center md:w-64">
+                        <header id="sleep-efficiency-score">
+                            <h2 className="text-2xl font-bold">Sleep Efficiency</h2>
+                        </header>
+                        <p className="flex justify-center items-center space-x-2">
+                            <SleepEfficiencyIcon className="h-8 w-8" />
+                            <span className="text-2xl font-bold">
+                                {sleepEffiencyToDate}
+                                <sup>%</sup>
+                            </span>
+                        </p>
+                    </div>
+                    <button
+                        type="button"
+                        className="p-1 cursor-pointer rounded hover:bg-gray-300"
+                        onClick={handleSortBy}
+                    >
+                        {sortByDsc ? <SortByAscIcon className="h-10 w-10" /> : <SortByDscIcon className="h-10 w-10" />}
+                    </button>
+                </>
             )}
             <SleepEntries onSetEditForm={handleEditForm} onDeleteEntry={handleDeleteEntry} entries={sleepEntries} />
             {!showForm ? (
@@ -93,6 +115,7 @@ export default function SleepLog() {
                         onFormCancel={handleFormCancel}
                         onSetSleepEntries={handleSetEntries}
                         isEditing={isEditing}
+                        sortByDsc={sortByDsc}
                         {...formFields}
                     />
                 </LocalizationProvider>

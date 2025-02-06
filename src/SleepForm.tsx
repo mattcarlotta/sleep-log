@@ -19,11 +19,18 @@ export type SleepLogProps = {
     napTime: number;
     notes: string;
     isEditing: boolean;
+    sortByDsc: boolean;
     onSetSleepEntries: (entry: Array<SleepEntry>) => void;
     onFormCancel: () => void;
 };
 
-export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, ...formFields }: SleepLogProps) {
+export default function SleepLog({
+    onFormCancel,
+    onSetSleepEntries,
+    isEditing,
+    sortByDsc,
+    ...formFields
+}: SleepLogProps) {
     const [sleepLog, setSleepLog] = useState<SleepLog>(formFields);
     const [formError, setFormError] = useState('');
 
@@ -71,7 +78,7 @@ export default function SleepLog({ onFormCancel, onSetSleepEntries, isEditing, .
                 });
             }
 
-            sleepEntries.sort((a, b) => a.id - b.id);
+            sleepEntries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id));
 
             localStorage.setItem('entries', JSON.stringify(sleepEntries));
             onSetSleepEntries(sleepEntries);
