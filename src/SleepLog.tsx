@@ -108,6 +108,7 @@ export default function SleepLog() {
 
                 db.current = dbConn;
             } catch (error) {
+                // TODO handle this error visually
                 console.error(`Database error: ${(error as Error)?.message || "Unknown error"}`);
             } finally {
                 setIsLoading(false);
