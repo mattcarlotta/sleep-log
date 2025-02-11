@@ -38,7 +38,8 @@ export default function SleepLog() {
         try {
             await db.current?.delete("entries", eid);
             const entries = (await db.current?.getAll("entries")) || [];
-            setSleepEntries(entries);
+
+            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
         } catch (error) {
             console.error(`Unable to delete entry. Reason: ${(error as Error)?.message || "Unknown reason."}`);
         }
