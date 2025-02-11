@@ -3,9 +3,9 @@ import type { Dayjs, SleepLog, SleepLogFields } from "./types";
 import { useState } from "react";
 import { MobileDatePicker as DatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { MobileDateTimePicker as DateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
+import Modal from "./Modal";
 import SaveIcon from "./SaveIcon";
 import ReadOnlyTextInput from "./ReadyOnlyTextInput";
-import Modal from "./Modal";
 
 export type SleepLogProps = SleepLog & {
     isEditing: boolean;

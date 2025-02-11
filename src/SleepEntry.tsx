@@ -1,21 +1,21 @@
 import type { SleepEntry, SleepLog } from "./types";
+import { useState } from "react";
 import dayjs from "dayjs";
 import { daysInWeek } from "./utils";
-import InBedIcon from "./InBedIcon";
 import AsleepIcon from "./AsleepIcon";
 import AwakeIcon from "./AwakeIcon";
 import AlarmIcon from "./AlarmIcon";
-import SleepDurationIcon from "./SleepDurationIcon";
+import DeleteIcon from "./DeleteIcon";
+import EditIcon from "./EditIcon";
+import InBedIcon from "./InBedIcon";
 import InBedDurationIcon from "./InBedDurationIcon";
 import NapIcon from "./NapIcon";
-import SleepQualityIcon from "./SleepQualityIcon";
 import NotesIcon from "./NotesIcon";
-import SleepEfficiencyIcon from "./SleepEfficiencyIcon";
-import EditIcon from "./EditIcon";
-import DeleteIcon from "./DeleteIcon";
-import TimeAwakeIcon from "./TimeAwakeIcon";
-import { useState } from "react";
 import Modal from "./Modal";
+import SleepDurationIcon from "./SleepDurationIcon";
+import SleepQualityIcon from "./SleepQualityIcon";
+import SleepEfficiencyIcon from "./SleepEfficiencyIcon";
+import TimeAwakeIcon from "./TimeAwakeIcon";
 
 type SleepEntryProps = {
     entry: SleepEntry;

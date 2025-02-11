@@ -2,16 +2,16 @@ import type { SleepLogDB, SleepEntry, SleepLog, SleepLogFields } from "./types";
 import type { IDBPDatabase } from "idb";
 import { openDB } from "idb";
 import { useEffect, useMemo, useRef, useState } from "react";
+import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import SleepForm from "./SleepForm";
 import SleepEntries from "./SleepEntries";
-import { initialState } from "./utils";
-import dayjs from "dayjs";
 import AddIcon from "./AddIcon";
 import SleepEfficiencyIcon from "./SleepEfficiencyIcon";
 import SortByAscIcon from "./SortByAscIcon";
 import SortByDscIcon from "./SortByDscIcon";
+import { initialState } from "./utils";
 
 export default function SleepLog() {
     const db = useRef<IDBPDatabase<SleepLogDB> | null>(null);
