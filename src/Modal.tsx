@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
-import { createPortal } from 'react-dom';
-import CancelIcon from './CancelIcon';
+import type { ReactNode } from "react";
+import { createPortal } from "react-dom";
+import CancelIcon from "./CancelIcon";
 
 type ModalProps = {
     children: ReactNode;

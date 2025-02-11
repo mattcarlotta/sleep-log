@@ -1,21 +1,21 @@
-import type { SleepEntry, SleepLog } from './types';
-import dayjs from 'dayjs';
-import { daysInWeek } from './utils';
-import InBedIcon from './InBedIcon';
-import AsleepIcon from './AsleepIcon';
-import AwakeIcon from './AwakeIcon';
-import AlarmIcon from './AlarmIcon';
-import SleepDurationIcon from './SleepDurationIcon';
-import InBedDurationIcon from './InBedDurationIcon';
-import NapIcon from './NapIcon';
-import SleepQualityIcon from './SleepQualityIcon';
-import NotesIcon from './NotesIcon';
-import SleepEfficiencyIcon from './SleepEfficiencyIcon';
-import EditIcon from './EditIcon';
-import DeleteIcon from './DeleteIcon';
-import TimeAwakeIcon from './TimeAwakeIcon';
-import { useState } from 'react';
-import Modal from './Modal';
+import type { SleepEntry, SleepLog } from "./types";
+import dayjs from "dayjs";
+import { daysInWeek } from "./utils";
+import InBedIcon from "./InBedIcon";
+import AsleepIcon from "./AsleepIcon";
+import AwakeIcon from "./AwakeIcon";
+import AlarmIcon from "./AlarmIcon";
+import SleepDurationIcon from "./SleepDurationIcon";
+import InBedDurationIcon from "./InBedDurationIcon";
+import NapIcon from "./NapIcon";
+import SleepQualityIcon from "./SleepQualityIcon";
+import NotesIcon from "./NotesIcon";
+import SleepEfficiencyIcon from "./SleepEfficiencyIcon";
+import EditIcon from "./EditIcon";
+import DeleteIcon from "./DeleteIcon";
+import TimeAwakeIcon from "./TimeAwakeIcon";
+import { useState } from "react";
+import Modal from "./Modal";
 
 type SleepEntryProps = {
     entry: SleepEntry;
@@ -56,7 +56,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                             <DeleteIcon className="h-6 w-6 text-red-500" />
                         </button>
                     </div>
-                    <h3 className="text-lg">{dayjs(entry.id).format('MMM Do')}</h3>
+                    <h3 className="text-lg">{dayjs(entry.id).format("MMM Do")}</h3>
                 </header>
                 <div className="h-px border-t border-green-700 pt-2" />
                 <div className="flex flex-col justify-center items-center">
@@ -72,23 +72,23 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                         </p>
                         <p className="hidden md:block">
                             <InBedIcon className="h-10 w-10" />
-                            <span className="text-2xl">{dayjs(entry.inBedTime).format('hh')}</span>
-                            <sup>{dayjs(entry.inBedTime).format('mm a')}</sup>
+                            <span className="text-2xl">{dayjs(entry.inBedTime).format("hh")}</span>
+                            <sup>{dayjs(entry.inBedTime).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
                             <AsleepIcon className="h-10 w-10" />
-                            <span className="text-2xl">{dayjs(entry.fallAsleep).format('hh')}</span>
-                            <sup>{dayjs(entry.fallAsleep).format('mm a')}</sup>
+                            <span className="text-2xl">{dayjs(entry.fallAsleep).format("hh")}</span>
+                            <sup>{dayjs(entry.fallAsleep).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
                             <AlarmIcon className="h-10 w-10" />
-                            <span className="text-2xl">{dayjs(entry.timeAwake).format('hh')}</span>
-                            <sup>{dayjs(entry.timeAwake).format('mm a')}</sup>
+                            <span className="text-2xl">{dayjs(entry.timeAwake).format("hh")}</span>
+                            <sup>{dayjs(entry.timeAwake).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
                             <AwakeIcon className="h-10 w-10" />
-                            <span className="text-2xl">{dayjs(entry.outOfBed).format('hh')}</span>
-                            <sup>{dayjs(entry.outOfBed).format('mm a')}</sup>
+                            <span className="text-2xl">{dayjs(entry.outOfBed).format("hh")}</span>
+                            <sup>{dayjs(entry.outOfBed).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
                             <TimeAwakeIcon className="h-10 w-10" />
@@ -135,7 +135,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
             </div>
             {showEntryDetail && (
                 <Modal title={daysInWeek[dayjs(entry.id).day()]} onCancel={toggleModal}>
-                    <h3 className="text-2xl font-bold text-center">{dayjs(entry.id).format('MMM Do')}&nbsp;</h3>
+                    <h3 className="text-2xl font-bold text-center">{dayjs(entry.id).format("MMM Do")}&nbsp;</h3>
                     <div className="h-px border-t border-green-700" />
                     <div className="flex flex-col justify-center items-center">
                         <div className="grid grid-cols-2 gap-x-16 gap-y-4 px-4">
@@ -150,23 +150,23 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                             </p>
                             <p>
                                 <InBedIcon className="h-10 w-10" />
-                                <span className="text-2xl">{dayjs(entry.inBedTime).format('hh')}</span>
-                                <sup>{dayjs(entry.inBedTime).format('mm a')}</sup>
+                                <span className="text-2xl">{dayjs(entry.inBedTime).format("hh")}</span>
+                                <sup>{dayjs(entry.inBedTime).format("mm a")}</sup>
                             </p>
                             <p>
                                 <AsleepIcon className="h-10 w-10" />
-                                <span className="text-2xl">{dayjs(entry.fallAsleep).format('hh')}</span>
-                                <sup>{dayjs(entry.fallAsleep).format('mm a')}</sup>
+                                <span className="text-2xl">{dayjs(entry.fallAsleep).format("hh")}</span>
+                                <sup>{dayjs(entry.fallAsleep).format("mm a")}</sup>
                             </p>
                             <p>
                                 <AlarmIcon className="h-10 w-10" />
-                                <span className="text-2xl">{dayjs(entry.timeAwake).format('hh')}</span>
-                                <sup>{dayjs(entry.timeAwake).format('mm a')}</sup>
+                                <span className="text-2xl">{dayjs(entry.timeAwake).format("hh")}</span>
+                                <sup>{dayjs(entry.timeAwake).format("mm a")}</sup>
                             </p>
                             <p>
                                 <AwakeIcon className="h-10 w-10" />
-                                <span className="text-2xl">{dayjs(entry.outOfBed).format('hh')}</span>
-                                <sup>{dayjs(entry.outOfBed).format('mm a')}</sup>
+                                <span className="text-2xl">{dayjs(entry.outOfBed).format("hh")}</span>
+                                <sup>{dayjs(entry.outOfBed).format("mm a")}</sup>
                             </p>
                             <p>
                                 <TimeAwakeIcon className="h-10 w-10" />

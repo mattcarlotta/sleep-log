@@ -1,7 +1,7 @@
-import type { SleepEntry as SleepEntryT, SleepLog } from './types';
-import EmptyEntriesIcon from './EmptyEntriesIcon';
-import AddIcon from './AddIcon';
-import SleepEntry from './SleepEntry';
+import type { SleepEntry as SleepEntryT, SleepLog } from "./types";
+import EmptyEntriesIcon from "./EmptyEntriesIcon";
+import AddIcon from "./AddIcon";
+import SleepEntry from "./SleepEntry";
 
 export type SleepEntriesProps = {
     entries: Array<SleepEntryT>;

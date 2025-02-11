@@ -1,5 +1,5 @@
-import SleepIcon from './SleepIcon';
-import SleepLog from './SleepLog';
+import SleepIcon from "./SleepIcon";
+import SleepLog from "./SleepLog";
 
 function App() {
     return (
