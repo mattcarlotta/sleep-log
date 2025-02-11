@@ -102,20 +102,20 @@ export default function SleepLog() {
                     }
                 });
 
-                const sleepEntries: Array<SleepEntry> = JSON.parse(localStorage.getItem("entries") || "[]");
+                // const sleepEntries: Array<SleepEntry> = JSON.parse(localStorage.getItem("entries") || "[]");
 
-                for (const entry of sleepEntries) {
-                    const entryExists = await dbConn.get("entries", entry.id);
-                    if (entryExists) continue;
-                    const e = {
-                        ...entry,
-                        inBedTime: dayjs(entry.inBedTime).second(0).millisecond(0).toISOString(),
-                        fallAsleep: dayjs(entry.fallAsleep).second(0).millisecond(0).toISOString(),
-                        timeAwake: dayjs(entry.timeAwake).second(0).millisecond(0).toISOString(),
-                        outOfBed: dayjs(entry.outOfBed).second(0).millisecond(0).toISOString()
-                    };
-                    await dbConn.add("entries", e);
-                }
+                // for (const entry of sleepEntries) {
+                //     const entryExists = await dbConn.get("entries", entry.id);
+                //     if (entryExists) continue;
+                //     const e = {
+                //         ...entry,
+                //         inBedTime: dayjs(entry.inBedTime).second(0).millisecond(0).toISOString(),
+                //         fallAsleep: dayjs(entry.fallAsleep).second(0).millisecond(0).toISOString(),
+                //         timeAwake: dayjs(entry.timeAwake).second(0).millisecond(0).toISOString(),
+                //         outOfBed: dayjs(entry.outOfBed).second(0).millisecond(0).toISOString()
+                //     };
+                //     await dbConn.add("entries", e);
+                // }
 
                 const entries = await dbConn.getAll("entries");
 
@@ -134,7 +134,7 @@ export default function SleepLog() {
         return () => {
             db.current?.close();
         };
-    }, [isLoading]);
+    }, []);
 
     useEffect(() => {
         setSleepEntries((prevEntries) =>
