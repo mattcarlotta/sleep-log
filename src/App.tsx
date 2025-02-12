@@ -1,7 +1,18 @@
 import SleepIcon from "./SleepIcon";
 import SleepLog from "./SleepLog";
+import useDBContext from "./useDBContext";
 
 function App() {
+    const { isLoading, error } = useDBContext();
+
+    if (isLoading) {
+        return (
+            <div className="h-full flex justify-center items-center">
+                <div title="loading..." className="loader" />
+            </div>
+        );
+    }
+
     return (
         <>
             <a
@@ -19,7 +30,18 @@ function App() {
                 </header>
             </section>
             <main id="main" className="overflow-y-auto">
-                <SleepLog />
+                {error ? (
+                    <div className="h-full flex flex-col items-center justify-center rounded">
+                        <div className="p-4 bg-gray-200 text-gray-600 border border-gray-300 text-center">
+                            <header id="app-error">
+                                <h1 className="text-3xl text-red-600">Unable to load app</h1>
+                            </header>
+                            <p className="text-xl text-red-600">{error}</p>
+                        </div>
+                    </div>
+                ) : (
+                    <SleepLog />
+                )}
             </main>
         </>
     );

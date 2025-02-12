@@ -12,7 +12,7 @@ export type SleepEntriesProps = {
 export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: SleepEntriesProps) {
     if (!entries.length) {
         return (
-            <div className="flex flex-col space-y-1.5 p-4 rounded bg-gray-200 text-gray-600 border border-gray-300 mt-8 mx-2">
+            <div className="flex flex-col justify-center items-center space-y-1.5 p-4 rounded bg-gray-200 text-gray-600 border border-gray-300 mt-8 mx-2">
                 <div className="flex justify-center items-center">
                     <EmptyEntriesIcon className="h-10 w-10 fill-gray-600" />
                 </div>

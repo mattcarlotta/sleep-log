@@ -1,7 +1,5 @@
-import type { SleepLogDB, SleepEntry, SleepLog, SleepLogFields } from "./types";
-import type { IDBPDatabase } from "idb";
-import { openDB } from "idb";
-import { useEffect, useMemo, useRef, useState } from "react";
+import type { SleepEntry, SleepLog, SleepLogFields } from "./types";
+import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,12 +10,12 @@ import SleepEfficiencyIcon from "./SleepEfficiencyIcon";
 import SortByAscIcon from "./SortByAscIcon";
 import SortByDscIcon from "./SortByDscIcon";
 import { initialState } from "./utils";
+import useDBContext from "./useDBContext";
 
 export default function SleepLog() {
-    const db = useRef<IDBPDatabase<SleepLogDB> | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const { db, initialEntries } = useDBContext();
     const [showForm, setShowForm] = useState(false);
-    const [sleepEntries, setSleepEntries] = useState<Array<SleepEntry>>([]);
+    const [sleepEntries, setSleepEntries] = useState<Array<SleepEntry>>(initialEntries);
     const [formFields, setFormFields] = useState<SleepLog>(initialState);
     const [isEditing, setIsEditing] = useState(false);
     const [sortByDsc, setSortByDesc] = useState(false);
@@ -36,8 +34,8 @@ export default function SleepLog() {
 
     const handleDeleteEntry = async (eid: number) => {
         try {
-            await db.current?.delete("entries", eid);
-            const entries = (await db.current?.getAll("entries")) || [];
+            await db?.delete("entries", eid);
+            const entries = (await db?.getAll("entries")) || [];
 
             setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
         } catch (error) {
@@ -64,7 +62,7 @@ export default function SleepLog() {
 
     const handleFormSubmit = async (fields: SleepLogFields) => {
         const entryId = dayjs(fields.id).startOf("day").valueOf();
-        const entryExists = await db.current?.get("entries", entryId);
+        const entryExists = await db?.get("entries", entryId);
         if (entryExists && !isEditing) {
             throw new Error(`An entry for ${dayjs(entryId).format("MM/DD/YYYY")} already exists!`);
         }
@@ -79,12 +77,12 @@ export default function SleepLog() {
         };
 
         if (isEditing) {
-            await db.current?.put("entries", entry);
+            await db?.put("entries", entry);
         } else {
-            await db.current?.add("entries", entry);
+            await db?.add("entries", entry);
         }
 
-        const entries = (await db.current?.getAll("entries")) || [];
+        const entries = (await db?.getAll("entries")) || [];
 
         setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
 
@@ -92,48 +90,10 @@ export default function SleepLog() {
     };
 
     useEffect(() => {
-        const initDB = async () => {
-            try {
-                const dbConn = await openDB<SleepLogDB>("SleepLog", 1, {
-                    upgrade(db) {
-                        const store = db.createObjectStore("entries", { keyPath: "id" });
-
-                        store.createIndex("id", "id", { unique: true });
-                    }
-                });
-
-                const entries = await dbConn.getAll("entries");
-
-                setSleepEntries(entries);
-
-                db.current = dbConn;
-            } catch (error) {
-                console.error(`Database error: ${(error as Error)?.message || "Unknown error"}`);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        initDB();
-
-        return () => {
-            db.current?.close();
-        };
-    }, []);
-
-    useEffect(() => {
         setSleepEntries((prevEntries) =>
             Array.from(prevEntries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)))
         );
     }, [sortByDsc]);
-
-    if (isLoading) {
-        return (
-            <div className="h-full flex justify-center items-center">
-                <div className="loader" />
-            </div>
-        );
-    }
 
     return (
         <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 mx-4 md:py-6 md:space-x-8">

@@ -1,5 +1,5 @@
 export type { Dayjs } from "dayjs";
-import type { DBSchema } from "idb";
+import type { DBSchema, IDBPDatabase } from "idb";
 
 export type SleepLog = {
     id: Dayjs;
@@ -43,3 +43,12 @@ export interface SleepLogDB extends DBSchema {
         };
     };
 }
+
+export type DB = IDBPDatabase<SleepLogDB> | null;
+
+export type DBContextT = {
+    db: DB;
+    initialEntries: Array<SleepEntry>;
+    isLoading: boolean;
+    error: string;
+};
