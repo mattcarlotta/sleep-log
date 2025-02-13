@@ -1,7 +1,6 @@
 import type { ChangeEvent, MouseEvent } from "react";
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
-import { saveAs } from "file-saver";
 import Popover from "@mui/material/Popover";
 import useDBContext from "./useDBContext";
 import { SleepEntry } from "./types";
@@ -51,9 +50,13 @@ export default function Actions() {
 
             const url = URL.createObjectURL(blob);
 
-            const fileName = `sleep-log-entries-${dayjs().format("MM-DD-YY")}.json`;
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `sleep-log-entries-${dayjs().format("MM-DD-YYYY")}.json`;
+            link.click();
 
-            saveAs(url, fileName);
+            URL.revokeObjectURL(url);
+            link.remove();
         } catch (error) {
             alert((error as Error)?.message);
         }
