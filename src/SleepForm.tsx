@@ -178,7 +178,7 @@ export default function SleepLog({ onFormCancel, onFormSubmit, isEditing, ...for
                             type="submit"
                             className="w-full flex justify-center items-center cursor-pointer rounded bg-blue-600 p-2.5 text-white text-lg font-semibold hover:bg-blue-700"
                         >
-                            <SaveIcon className="h-6 w-6" />
+                            <SaveIcon className="h-6 w-6 fill-white" />
                             &nbsp;{isEditing ? "Update" : "Save"} Entry
                         </button>
                     </div>

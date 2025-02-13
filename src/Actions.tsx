@@ -1,6 +1,14 @@
-import { ChangeEvent, useRef } from "react";
+import type { ChangeEvent, MouseEvent } from "react";
+import { useRef, useState } from "react";
+import dayjs from "dayjs";
+import { saveAs } from "file-saver";
+import Popover from "@mui/material/Popover";
 import useDBContext from "./useDBContext";
 import { SleepEntry } from "./types";
+import SettingsIcon from "./SettingsIcon";
+import SaveIcon from "./SaveIcon";
+import ImportIcon from "./ImportIcon";
+import DeleteIcon from "./DeleteIcon";
 
 const SLEEP_ENTRY_KEYS: Array<keyof SleepEntry> = [
     "id",
@@ -18,13 +26,18 @@ const SLEEP_ENTRY_KEYS: Array<keyof SleepEntry> = [
     "notes"
 ];
 
-type ActionsProps = {
-    onSetSleepEntries: (entries: Array<SleepEntry>) => void;
-};
-
-export default function Actions({ onSetSleepEntries }: ActionsProps) {
+export default function Actions() {
     const { db } = useDBContext();
     const fileRef = useRef<HTMLInputElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
 
     const handleDownloadData = async () => {
         try {
@@ -38,13 +51,9 @@ export default function Actions({ onSetSleepEntries }: ActionsProps) {
 
             const url = URL.createObjectURL(blob);
 
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "sleep-log-data.json";
-            link.click();
+            const fileName = `sleep-log-entries-${dayjs().format("MM-DD-YY")}.json`;
 
-            URL.revokeObjectURL(url);
-            link.remove();
+            saveAs(url, fileName);
         } catch (error) {
             alert((error as Error)?.message);
         }
@@ -89,43 +98,94 @@ export default function Actions({ onSetSleepEntries }: ActionsProps) {
             const tx = db?.transaction("entries", "readwrite");
             await Promise.all([...sanitizedSleepEntries.map((entry) => tx?.store.add(entry)), tx?.done]);
 
-            const entries = (await db?.getAll("entries")) || [];
-
-            onSetSleepEntries(entries);
+            window.location.reload();
         } catch (error) {
             alert((error as Error)?.message);
         }
     };
 
     const handleClearData = async () => {
+        if (
+            !window.confirm(
+                "WARNING: This action is irreversible! It's highly recommended that you download your entries before continuing.Press OK to continue."
+            )
+        )
+            return;
+        if (!window.confirm("Last chance! Are you sure you want to delete all sleep entries? Press OK to continue."))
+            return;
+
         try {
             await db?.clear("entries");
-            onSetSleepEntries([]);
+
+            window.location.reload();
         } catch (error) {
             alert((error as Error)?.message);
         }
     };
 
+    const open = Boolean(anchorEl);
+    const id = open ? "actions-menu" : undefined;
+
     return (
-        <>
-            <button className="cursor-pointer" type="button" onClick={handleDownloadData}>
-                Download Data
+        <div className="flex justify-end">
+            <button
+                className="cursor-pointer p-2 rounded hover:bg-black/30"
+                aria-describedby={id}
+                type="button"
+                onClick={handleClick}
+            >
+                <SettingsIcon className="h-8 w-8" />
             </button>
-            <div>
-                <button type="button" className="cursor-pointer" onClick={() => fileRef.current?.click()}>
-                    Import Data
-                </button>
-                <input
-                    ref={fileRef}
-                    type="file"
-                    accept=".json,application/json"
-                    className="hidden"
-                    onChange={handleImportData}
-                />
-            </div>
-            <button className="cursor-pointer" type="button" onClick={handleClearData}>
-                Clear Data
-            </button>
-        </>
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleMenuClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+                <div className="flex flex-col space-y-4 m-2">
+                    <button
+                        className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
+                        type="button"
+                        onClick={handleDownloadData}
+                    >
+                        <div className="flex items-center space-x-2">
+                            <SaveIcon className="h-5 w-5 fill-black" />
+                            <p>Download Entries</p>
+                        </div>
+                    </button>
+                    <div>
+                        <button
+                            type="button"
+                            className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
+                            onClick={() => fileRef.current?.click()}
+                        >
+                            <div className="flex items-center space-x-2">
+                                <ImportIcon className="h-6 w-6" />
+                                <p>Import Entries</p>
+                            </div>
+                        </button>
+                        <input
+                            ref={fileRef}
+                            type="file"
+                            accept=".json,application/json"
+                            className="hidden"
+                            onChange={handleImportData}
+                        />
+                    </div>
+                    <button
+                        className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
+                        type="button"
+                        onClick={handleClearData}
+                    >
+                        <div className="flex items-center space-x-2">
+                            <DeleteIcon className="h-6 w-6" />
+                            <p>Delete Entries</p>
+                        </div>
+                    </button>
+                </div>
+            </Popover>
+        </div>
     );
 }

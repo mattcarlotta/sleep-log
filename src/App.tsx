@@ -1,3 +1,4 @@
+import Actions from "./Actions";
 import SleepIcon from "./SleepIcon";
 import SleepLog from "./SleepLog";
 import useDBContext from "./useDBContext";
@@ -23,11 +24,12 @@ function App() {
             >
                 Skip to content
             </a>
-            <section className="flex justify-center items-center bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100 border-b border-gray-400 py-4 shadow-md">
-                <header className="flex flex-row space-x-2" id="navbar">
+            <section className="flex bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100 border-b border-gray-400 p-4 shadow-sm sm:justify-center sm:items-center">
+                <header className="flex flex-1 flex-row items-center space-x-2 md:justify-center" id="navbar">
                     <h1 className="text-3xl font-bold xs:text-4xl">Sleep Log</h1>
                     <SleepIcon className="h-6 w-6" />
                 </header>
+                <Actions />
             </section>
             <main id="main" className="overflow-y-auto">
                 {error ? (
