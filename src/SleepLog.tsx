@@ -98,7 +98,7 @@ export default function SleepLog() {
 
     return (
         <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 mx-4 md:py-6 md:space-x-8">
-            <Actions onImportSleepEntries={setSleepEntries} />
+            <Actions onSetSleepEntries={setSleepEntries} />
             {sleepEntries.length > 0 && (
                 <>
                     <div className="flex flex-col items-center space-y-2 px-6 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center md:w-64">

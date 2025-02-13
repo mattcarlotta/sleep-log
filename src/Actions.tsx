@@ -19,16 +19,19 @@ const SLEEP_ENTRY_KEYS: Array<keyof SleepEntry> = [
 ];
 
 type ActionsProps = {
-    onImportSleepEntries: (entries: Array<SleepEntry>) => void;
+    onSetSleepEntries: (entries: Array<SleepEntry>) => void;
 };
 
-export default function Actions({ onImportSleepEntries }: ActionsProps) {
+export default function Actions({ onSetSleepEntries }: ActionsProps) {
     const { db } = useDBContext();
     const fileRef = useRef<HTMLInputElement | null>(null);
 
     const handleDownloadData = async () => {
         try {
-            const entries = await db?.getAll("entries");
+            const entries = (await db?.getAll("entries")) || [];
+
+            if (!entries.length) return;
+
             const data = JSON.stringify(entries, null, 2);
 
             const blob = new Blob([data], { type: "application/json" });
@@ -63,6 +66,7 @@ export default function Actions({ onImportSleepEntries }: ActionsProps) {
                 throw Error("File is not a valid sleep log with entries.");
             }
 
+            const sanitizedSleepEntries: Array<SleepEntry> = [];
             for (const entry of dataEntries) {
                 const entryExists = await db?.get("entries", entry.id);
 
@@ -77,12 +81,26 @@ export default function Actions({ onImportSleepEntries }: ActionsProps) {
                     sanitizedSleepEntry[key] = entry[key];
                 });
 
-                await db?.add("entries", sanitizedSleepEntry);
+                sanitizedSleepEntries.push(sanitizedSleepEntry);
             }
+
+            if (!sanitizedSleepEntries.length) return;
+
+            const tx = db?.transaction("entries", "readwrite");
+            await Promise.all([...sanitizedSleepEntries.map((entry) => tx?.store.add(entry)), tx?.done]);
 
             const entries = (await db?.getAll("entries")) || [];
 
-            onImportSleepEntries(entries);
+            onSetSleepEntries(entries);
+        } catch (error) {
+            alert((error as Error)?.message);
+        }
+    };
+
+    const handleClearData = async () => {
+        try {
+            await db?.clear("entries");
+            onSetSleepEntries([]);
         } catch (error) {
             alert((error as Error)?.message);
         }
@@ -105,6 +123,9 @@ export default function Actions({ onImportSleepEntries }: ActionsProps) {
                     onChange={handleImportData}
                 />
             </div>
+            <button className="cursor-pointer" type="button" onClick={handleClearData}>
+                Clear Data
+            </button>
         </>
     );
 }

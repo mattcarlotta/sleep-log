@@ -33,7 +33,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
     return (
         <>
             <div
-                className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-full shadow-md md:w-64"
+                className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-full shadow-md md:max-w-68"
                 key={entry.id}
             >
                 <header id="sleep-entries" className="grid grid-cols-2">
