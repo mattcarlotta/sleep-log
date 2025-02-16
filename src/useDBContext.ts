@@ -7,7 +7,7 @@ export default function useDBContext() {
     const context = useContext(DBContext);
 
     if (!context) {
-        throw new Error("This component cannot be rendered outside the ImageContext component");
+        throw new Error("This component cannot be rendered outside the DBProvider component");
     }
 
     return context;

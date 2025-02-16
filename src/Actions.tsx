@@ -26,7 +26,7 @@ const SLEEP_ENTRY_KEYS: Array<keyof SleepEntry> = [
 ];
 
 export default function Actions() {
-    const { db, setSleepEntries, sortByDsc } = useDBContext();
+    const { db, syncSleepEntries } = useDBContext();
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -101,9 +101,7 @@ export default function Actions() {
             const tx = db?.transaction("entries", "readwrite");
             await Promise.all([...sanitizedSleepEntries.map((entry) => tx?.store.add(entry)), tx?.done]);
 
-            const entries = (await db?.getAll("entries")) || [];
-
-            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
+            await syncSleepEntries();
         } catch (error) {
             alert((error as Error)?.message);
         }
@@ -122,9 +120,7 @@ export default function Actions() {
         try {
             await db?.clear("entries");
 
-            const entries = (await db?.getAll("entries")) || [];
-
-            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
+            await syncSleepEntries();
         } catch (error) {
             alert((error as Error)?.message);
         }

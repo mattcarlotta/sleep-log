@@ -15,7 +15,7 @@ export type SleepLogProps = SleepLog & {
 };
 
 export default function SleepLog({ onFormCancel, isEditing, ...formFields }: SleepLogProps) {
-    const { db, sortByDsc, setSleepEntries } = useDBContext();
+    const { db, syncSleepEntries } = useDBContext();
     const [sleepLog, setSleepLog] = useState<SleepLog>(formFields);
     const [formError, setFormError] = useState("");
 
@@ -70,9 +70,7 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                 await db?.add("entries", entry);
             }
 
-            const entries = (await db?.getAll("entries")) || [];
-
-            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
+            await syncSleepEntries();
 
             onFormCancel();
         } catch (error) {

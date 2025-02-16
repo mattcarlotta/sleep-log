@@ -53,5 +53,5 @@ export type DBContextT = {
     error: string;
     sortByDsc: boolean;
     handleSortBy: () => void;
-    setSleepEntries: (entries: Array<SleepEntry>) => void;
+    syncSleepEntries: () => Promise<void>;
 };

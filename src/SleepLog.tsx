@@ -13,7 +13,7 @@ import useDBContext from "./useDBContext";
 import { initialState } from "./utils";
 
 export default function SleepLog() {
-    const { db, sortByDsc, handleSortBy, sleepEntries, setSleepEntries } = useDBContext();
+    const { db, sortByDsc, handleSortBy, sleepEntries, syncSleepEntries } = useDBContext();
     const [showForm, setShowForm] = useState(false);
     const [formFields, setFormFields] = useState<SleepLog>(initialState);
     const [isEditing, setIsEditing] = useState(false);
@@ -33,9 +33,7 @@ export default function SleepLog() {
     const handleDeleteEntry = async (eid: number) => {
         try {
             await db?.delete("entries", eid);
-            const entries = (await db?.getAll("entries")) || [];
-
-            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
+            await syncSleepEntries();
         } catch (error) {
             console.error(`Unable to delete entry. Reason: ${(error as Error)?.message || "Unknown reason."}`);
         }

@@ -1,7 +1,7 @@
 import type { SleepLogDB, SleepEntry, DB } from "./types";
 import type { ReactNode } from "react";
 import { openDB } from "idb";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DBContext } from "./useDBContext";
 
 export default function DBProvider({ children }: { children: ReactNode }) {
@@ -11,9 +11,15 @@ export default function DBProvider({ children }: { children: ReactNode }) {
     const [error, setError] = useState("");
     const [sortByDsc, setSortByDesc] = useState(false);
 
-    const handleSortBy = () => {
+    const handleSortBy = useCallback(() => {
         setSortByDesc((p) => !p);
-    };
+    }, []);
+
+    const syncSleepEntries = useCallback(async () => {
+        const entries = (await db?.getAll("entries")) || [];
+
+        setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
+    }, [db, sortByDsc]);
 
     useEffect(() => {
         const initDB = async () => {
@@ -49,7 +55,7 @@ export default function DBProvider({ children }: { children: ReactNode }) {
     }, [sortByDsc]);
 
     return (
-        <DBContext.Provider value={{ db, sortByDsc, handleSortBy, setSleepEntries, sleepEntries, isLoading, error }}>
+        <DBContext.Provider value={{ db, sortByDsc, handleSortBy, syncSleepEntries, sleepEntries, isLoading, error }}>
             {children}
         </DBContext.Provider>
     );
