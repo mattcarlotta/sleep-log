@@ -6,23 +6,26 @@ import { DBContext } from "./useDBContext";
 
 export default function DBProvider({ children }: { children: ReactNode }) {
     const [db, setDb] = useState<DB | null>(null);
-    const [initialEntries, setInitialEntries] = useState<Array<SleepEntry>>([]);
+    const [sleepEntries, setSleepEntries] = useState<Array<SleepEntry>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const [sortByDsc, setSortByDesc] = useState(false);
+
+    const handleSortBy = () => {
+        setSortByDesc((p) => !p);
+    };
 
     useEffect(() => {
         const initDB = async () => {
             try {
                 const dbConn = await openDB<SleepLogDB>("SleepLog", 1, {
                     upgrade(db) {
-                        const store = db.createObjectStore("entries", { keyPath: "id" });
-
-                        store.createIndex("id", "id", { unique: true });
+                        db.createObjectStore("entries", { keyPath: "id" }).createIndex("id", "id", { unique: true });
                     }
                 });
 
-                const entries = await dbConn.getAll("entries");
-                setInitialEntries(entries);
+                const entries = (await dbConn.getAll("entries")) || [];
+                setSleepEntries(entries);
 
                 setDb(dbConn);
             } catch (error) {
@@ -39,5 +42,15 @@ export default function DBProvider({ children }: { children: ReactNode }) {
         };
     }, [isLoading, db]);
 
-    return <DBContext.Provider value={{ db, initialEntries, isLoading, error }}>{children}</DBContext.Provider>;
+    useEffect(() => {
+        setSleepEntries((prevEntries) =>
+            Array.from(prevEntries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)))
+        );
+    }, [sortByDsc]);
+
+    return (
+        <DBContext.Provider value={{ db, sortByDsc, handleSortBy, setSleepEntries, sleepEntries, isLoading, error }}>
+            {children}
+        </DBContext.Provider>
+    );
 }

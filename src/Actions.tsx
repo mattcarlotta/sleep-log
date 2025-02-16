@@ -1,9 +1,9 @@
 import type { ChangeEvent, MouseEvent } from "react";
+import type { SleepEntry } from "./types";
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
 import Popover from "@mui/material/Popover";
 import useDBContext from "./useDBContext";
-import { SleepEntry } from "./types";
 import SettingsIcon from "./SettingsIcon";
 import SaveIcon from "./SaveIcon";
 import ImportIcon from "./ImportIcon";
@@ -26,7 +26,7 @@ const SLEEP_ENTRY_KEYS: Array<keyof SleepEntry> = [
 ];
 
 export default function Actions() {
-    const { db } = useDBContext();
+    const { db, setSleepEntries, sortByDsc } = useDBContext();
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -101,7 +101,9 @@ export default function Actions() {
             const tx = db?.transaction("entries", "readwrite");
             await Promise.all([...sanitizedSleepEntries.map((entry) => tx?.store.add(entry)), tx?.done]);
 
-            window.location.reload();
+            const entries = (await db?.getAll("entries")) || [];
+
+            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
         } catch (error) {
             alert((error as Error)?.message);
         }
@@ -120,7 +122,9 @@ export default function Actions() {
         try {
             await db?.clear("entries");
 
-            window.location.reload();
+            const entries = (await db?.getAll("entries")) || [];
+
+            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
         } catch (error) {
             alert((error as Error)?.message);
         }

@@ -48,7 +48,10 @@ export type DB = IDBPDatabase<SleepLogDB> | null;
 
 export type DBContextT = {
     db: DB;
-    initialEntries: Array<SleepEntry>;
+    sleepEntries: Array<SleepEntry>;
     isLoading: boolean;
     error: string;
+    sortByDsc: boolean;
+    handleSortBy: () => void;
+    setSleepEntries: (entries: Array<SleepEntry>) => void;
 };

@@ -1,5 +1,5 @@
-import type { SleepEntry, SleepLog, SleepLogFields } from "./types";
-import { useEffect, useMemo, useState } from "react";
+import type { SleepLog } from "./types";
+import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -9,16 +9,14 @@ import AddIcon from "./AddIcon";
 import SleepEfficiencyIcon from "./SleepEfficiencyIcon";
 import SortByAscIcon from "./SortByAscIcon";
 import SortByDscIcon from "./SortByDscIcon";
-import { initialState } from "./utils";
 import useDBContext from "./useDBContext";
+import { initialState } from "./utils";
 
 export default function SleepLog() {
-    const { db, initialEntries } = useDBContext();
+    const { db, sortByDsc, handleSortBy, sleepEntries, setSleepEntries } = useDBContext();
     const [showForm, setShowForm] = useState(false);
-    const [sleepEntries, setSleepEntries] = useState<Array<SleepEntry>>(initialEntries);
     const [formFields, setFormFields] = useState<SleepLog>(initialState);
     const [isEditing, setIsEditing] = useState(false);
-    const [sortByDsc, setSortByDesc] = useState(false);
 
     const sleepEffiencyToDate = useMemo(() => {
         const sE = sleepEntries.reduce((sum, e) => (sum += e.sleepEfficiency), 0.0);
@@ -43,10 +41,6 @@ export default function SleepLog() {
         }
     };
 
-    const handleSortBy = () => {
-        setSortByDesc((p) => !p);
-    };
-
     const handleEditForm = (fields: SleepLog) => {
         setFormFields({
             ...fields,
@@ -59,41 +53,6 @@ export default function SleepLog() {
         setIsEditing(true);
         setShowForm(true);
     };
-
-    const handleFormSubmit = async (fields: SleepLogFields) => {
-        const entryId = dayjs(fields.id).startOf("day").valueOf();
-        const entryExists = await db?.get("entries", entryId);
-        if (entryExists && !isEditing) {
-            throw new Error(`An entry for ${dayjs(entryId).format("MM/DD/YYYY")} already exists!`);
-        }
-
-        const entry = {
-            ...fields,
-            id: entryId,
-            inBedTime: fields.inBedTime.toISOString(),
-            fallAsleep: fields.fallAsleep.toISOString(),
-            timeAwake: fields.timeAwake.toISOString(),
-            outOfBed: fields.outOfBed.toISOString()
-        };
-
-        if (isEditing) {
-            await db?.put("entries", entry);
-        } else {
-            await db?.add("entries", entry);
-        }
-
-        const entries = (await db?.getAll("entries")) || [];
-
-        setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
-
-        handleFormCancel();
-    };
-
-    useEffect(() => {
-        setSleepEntries((prevEntries) =>
-            Array.from(prevEntries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)))
-        );
-    }, [sortByDsc]);
 
     return (
         <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 mx-4 md:py-6 md:space-x-8">
@@ -131,12 +90,7 @@ export default function SleepLog() {
                 </button>
             ) : (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <SleepForm
-                        onFormCancel={handleFormCancel}
-                        onFormSubmit={handleFormSubmit}
-                        isEditing={isEditing}
-                        {...formFields}
-                    />
+                    <SleepForm onFormCancel={handleFormCancel} isEditing={isEditing} {...formFields} />
                 </LocalizationProvider>
             )}
         </div>

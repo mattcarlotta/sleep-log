@@ -1,19 +1,21 @@
 import type { ChangeEvent, FormEvent } from "react";
-import type { Dayjs, SleepLog, SleepLogFields } from "./types";
+import type { Dayjs, SleepLog } from "./types";
 import { useState } from "react";
+import dayjs from "dayjs";
 import { MobileDatePicker as DatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { MobileDateTimePicker as DateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 import Modal from "./Modal";
 import SaveIcon from "./SaveIcon";
 import ReadOnlyTextInput from "./ReadyOnlyTextInput";
+import useDBContext from "./useDBContext";
 
 export type SleepLogProps = SleepLog & {
     isEditing: boolean;
     onFormCancel: () => void;
-    onFormSubmit: (fields: SleepLogFields) => Promise<void>;
 };
 
-export default function SleepLog({ onFormCancel, onFormSubmit, isEditing, ...formFields }: SleepLogProps) {
+export default function SleepLog({ onFormCancel, isEditing, ...formFields }: SleepLogProps) {
+    const { db, sortByDsc, setSleepEntries } = useDBContext();
     const [sleepLog, setSleepLog] = useState<SleepLog>(formFields);
     const [formError, setFormError] = useState("");
 
@@ -41,7 +43,38 @@ export default function SleepLog({ onFormCancel, onFormSubmit, isEditing, ...for
                 throw new Error("You must choose a quality of sleep option!");
             }
 
-            await onFormSubmit({ ...sleepLog, timeInBed, totalSleep, sleepEfficiency });
+            const entryId = dayjs(sleepLog.id).startOf("day").valueOf();
+            const entryExists = await db?.get("entries", entryId);
+            if (entryExists && !isEditing) {
+                throw new Error(`An entry for ${dayjs(entryId).format("MM/DD/YYYY")} already exists!`);
+            }
+
+            const entry = {
+                id: entryId,
+                inBedTime: sleepLog.inBedTime.toISOString(),
+                fallAsleep: sleepLog.fallAsleep.toISOString(),
+                timeAwake: sleepLog.timeAwake.toISOString(),
+                timeInBed,
+                outOfBed: sleepLog.outOfBed.toISOString(),
+                totalSleep,
+                totalTimeAwake: sleepLog.totalTimeAwake,
+                sleepEfficiency,
+                sleepQuality: sleepLog.sleepQuality,
+                napTime: sleepLog.napTime,
+                notes: sleepLog.notes
+            };
+
+            if (isEditing) {
+                await db?.put("entries", entry);
+            } else {
+                await db?.add("entries", entry);
+            }
+
+            const entries = (await db?.getAll("entries")) || [];
+
+            setSleepEntries(entries.sort((a, b) => (sortByDsc ? b.id - a.id : a.id - b.id)));
+
+            onFormCancel();
         } catch (error) {
             setFormError(`Unable to save entry. Reason: ${(error as Error)?.message}`);
         }
