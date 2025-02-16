@@ -73,7 +73,7 @@ export default function SleepLog() {
                         className="p-1 cursor-pointer rounded hover:bg-gray-300"
                         onClick={handleSortBy}
                     >
-                        {sortByDsc ? <SortByAscIcon className="h-10 w-10" /> : <SortByDscIcon className="h-10 w-10" />}
+                        {!sortByDsc ? <SortByAscIcon className="h-10 w-10" /> : <SortByDscIcon className="h-10 w-10" />}
                     </button>
                 </>
             )}

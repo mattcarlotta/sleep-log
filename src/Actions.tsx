@@ -67,8 +67,8 @@ export default function Actions() {
             const file = e.target.files?.[0];
             if (!file) return;
 
-            const maxSizeFileSBytes = 10 * 1024 * 1024;
-            if (file.size > maxSizeFileSBytes) {
+            const maxSizeFileSizeBytes = 10 * 1024 * 1024;
+            if (file.size > maxSizeFileSizeBytes) {
                 throw Error("File size is larger than 10MB.");
             }
 
