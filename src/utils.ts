@@ -1,7 +1,5 @@
 import dayjs from "dayjs";
 
-export const daysInWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
-
 export const initialState = {
     id: dayjs(),
     inBedTime: dayjs().subtract(1, "day").startOf("day"),

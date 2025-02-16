@@ -1,7 +1,6 @@
 import type { SleepEntry, SleepLog } from "./types";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { daysInWeek } from "./utils";
 import AsleepIcon from "./AsleepIcon";
 import AwakeIcon from "./AwakeIcon";
 import AlarmIcon from "./AlarmIcon";
@@ -37,7 +36,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                 key={entry.id}
             >
                 <header id="sleep-entries" className="grid grid-cols-2">
-                    <h2 className="text-2xl font-bold">{daysInWeek[dayjs(entry.id).day()]}&nbsp;</h2>
+                    <h2 className="text-2xl font-bold">{dayjs(entry.id).format("dddd")}&nbsp;</h2>
                     <div className="flex items-center justify-end space-x-2">
                         <button
                             type="button"
@@ -134,7 +133,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                 </div>
             </div>
             {showEntryDetail && (
-                <Modal title={daysInWeek[dayjs(entry.id).day()]} onCancel={toggleModal}>
+                <Modal title={dayjs(entry.id).format("dddd")} onCancel={toggleModal}>
                     <h3 className="text-2xl font-bold text-center">{dayjs(entry.id).format("MMM Do")}&nbsp;</h3>
                     <div className="h-px border-t border-green-700" />
                     <div className="flex flex-col justify-center items-center">
