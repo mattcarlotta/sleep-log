@@ -56,12 +56,12 @@ export default function SleepLog() {
         <div className="flex flex-col items-center justify-center flex-wrap space-y-6 py-4 mb-20 mx-4 md:py-6 md:space-x-8">
             {sleepEntries.length > 0 && (
                 <>
-                    <div className="flex flex-col items-center space-y-2 px-6 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center md:w-64">
+                    <div className="flex flex-col items-center space-y-2 px-6 py-2.5 rounded bg-cyan-800/10 border border-cyan-300 shadow-md text-center dark:bg-purple-900/50 dark:border-purple-800 md:w-64">
                         <header id="sleep-efficiency-score">
                             <h2 className="text-2xl font-bold">Sleep Efficiency</h2>
                         </header>
                         <p className="flex justify-center items-center space-x-2">
-                            <SleepEfficiencyIcon className="h-8 w-8" />
+                            <SleepEfficiencyIcon className="h-8 w-8 fill-black dark:fill-white" />
                             <span className="text-2xl font-bold">
                                 {sleepEffiencyToDate}
                                 <sup>%</sup>
@@ -70,10 +70,14 @@ export default function SleepLog() {
                     </div>
                     <button
                         type="button"
-                        className="p-1 cursor-pointer rounded hover:bg-gray-300"
+                        className="p-1 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900/50"
                         onClick={handleSortBy}
                     >
-                        {!sortByDsc ? <SortByAscIcon className="h-10 w-10" /> : <SortByDscIcon className="h-10 w-10" />}
+                        {!sortByDsc ? (
+                            <SortByAscIcon className="h-10 w-10 text-black dark:text-gray-200" />
+                        ) : (
+                            <SortByDscIcon className="h-10 w-10 text-black dark:text-gray-200" />
+                        )}
                     </button>
                 </>
             )}
@@ -81,7 +85,7 @@ export default function SleepLog() {
             {!showForm ? (
                 <button
                     type="button"
-                    className="fixed bottom-4 right-4 text-2xl rounded-full p-3.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl"
+                    className="fixed bottom-4 right-4 text-2xl rounded-full p-3.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl dark:bg-purple-700 dark:hover:bg-purple-900"
                     onClick={() => setShowForm(true)}
                 >
                     <AddIcon className="h-8 w-8" />

@@ -132,7 +132,7 @@ export default function Actions() {
     return (
         <div className="flex justify-end">
             <button
-                className="cursor-pointer p-2 rounded hover:bg-black/30"
+                className="cursor-pointer p-2 rounded hover:bg-black/30 dark:hover:bg-purple-900/50"
                 aria-describedby={id}
                 type="button"
                 onClick={handleClick}

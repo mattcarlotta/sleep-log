@@ -1,6 +1,12 @@
 export default function SleepEfficiencyIcon({ className }: { className?: string }) {
     return (
-        <svg className={className} viewBox="0 0 512 512" fill="#000" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            className={className}
+            viewBox="0 0 512 512"
+            fill="currentColor"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <title>Sleep Efficiency</title>
             <path d="M210.16,276.71c-0.211,0.105-21.58,10.51-41.574,10.51c-20.07,0-41.4-10.425-41.613-10.53l-16.715,33.527    c1.181,0.592,29.265,14.466,58.328,14.466s57.147-13.874,58.328-14.466L210.16,276.71z" />
             <path d="M384.989,276.71c-0.21,0.105-21.58,10.51-41.574,10.51c-20.07,0-41.4-10.425-41.613-10.53l-16.715,33.527    c1.181,0.592,29.265,14.466,58.328,14.466c29.063,0,57.147-13.874,58.328-14.466L384.989,276.71z" />

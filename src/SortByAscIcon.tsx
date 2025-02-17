@@ -4,7 +4,7 @@ export default function SortByAscIcon({ className }: { className?: string }) {
             <title>Sorty By Descending</title>
             <path
                 d="M13 12H21M13 8H21M13 16H21M6 7V17M6 17L3 14M6 17L9 14"
-                stroke="#000"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"

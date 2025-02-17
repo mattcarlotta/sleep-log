@@ -1,25 +1,38 @@
 @import "tailwindcss";
 
-:root {
-    --background: #f7f7f7;
-    --foreground: #171717;
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #171717;
+        --foreground: #f7f7f7;
+    }
+
+    main {
+        background-image: radial-gradient(circle at 0 100%, #241B41, transparent 30%),
+            radial-gradient(circle at 100% 100%, #241B41, transparent 30%);
+        background-color: #131313;
+    }
 }
 
-/* @media (prefers-color-scheme: dark) { */
-/*     :root { */
-/*         --background: #121213; */
-/*         --foreground: #ededed; */
-/*     } */
-/* } */
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #f7f7f7;
+        --foreground: #171717;
+    }
+
+    main {
+        background-image: radial-gradient(circle at 0 100%, #d8eedc, transparent 50%),
+            radial-gradient(circle at 100% 100%, #e2e1ff, transparent 50%);
+        background-color: #fff;
+    }
+}
 
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
-    /* color-scheme: light dark; */
     color: var(--foreground);
-    /* background: var(--background); */
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -41,10 +54,6 @@ main {
     height: 100vh;
 }
 
-main {
-    background-image: radial-gradient(circle at 0 100%, #d8eedc, #fff0 50%),
-        radial-gradient(circle at 100% 100%, #e2e1ff, #fff0 50%);
-}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

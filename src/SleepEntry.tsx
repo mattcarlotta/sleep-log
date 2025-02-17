@@ -32,7 +32,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
     return (
         <>
             <div
-                className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-full shadow-md md:max-w-68"
+                className="flex flex-col space-y-2 px-4 py-2.5 rounded bg-orange-800/10 border border-orange-300 w-full shadow-md dark:bg-purple-900/50 dark:border-purple-800 md:max-w-68"
                 key={entry.id}
             >
                 <header id="sleep-entries" className="grid grid-cols-2">
@@ -41,7 +41,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                         <button
                             type="button"
                             title="Edit Entry"
-                            className="p-1 cursor-pointer rounded hover:bg-gray-300"
+                            className="p-1 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900"
                             onClick={() => onSetEditForm(entry)}
                         >
                             <EditIcon className="h-6 w-6 text-blue-500" />
@@ -49,7 +49,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                         <button
                             type="button"
                             title="Delete Entry"
-                            className="p-1 cursor-pointer rounded hover:bg-gray-300"
+                            className="p-1 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900"
                             onClick={() => onDeleteEntry(entry.id)}
                         >
                             <DeleteIcon className="h-6 w-6 text-red-500" />
@@ -57,65 +57,65 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                     </div>
                     <h3 className="text-lg">{dayjs(entry.id).format("MMM Do")}</h3>
                 </header>
-                <div className="h-px border-t border-green-700 pt-2" />
+                <div className="h-px border-t border-gray-700 pt-2" />
                 <div className="flex flex-col justify-center items-center">
                     <div className="grid grid-cols-2 gap-x-10 gap-y-4 px-4">
                         <p className="font-bold">
-                            <SleepEfficiencyIcon className="h-10 w-10" />
+                            <SleepEfficiencyIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
                             <span className="text-2xl">{Math.round(entry.sleepEfficiency)}</span>
                             <sup>%</sup>
                         </p>
                         <p className="font-bold capitalize">
-                            <SleepQualityIcon className="mb-1 h-10 w-10" />
+                            <SleepQualityIcon className="mb-1 h-10 w-10 fill-black dark:fill-gray-200" />
                             <span>{entry.sleepQuality}</span>
                         </p>
                         <p className="hidden md:block">
-                            <InBedIcon className="h-10 w-10" />
+                            <InBedIcon className="h-10 w-10 text-black dark:text-gray-200" />
                             <span className="text-2xl">{dayjs(entry.inBedTime).format("hh")}</span>
                             <sup>{dayjs(entry.inBedTime).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
-                            <AsleepIcon className="h-10 w-10" />
+                            <AsleepIcon className="h-10 w-10 text-black dark:text-gray-200" />
                             <span className="text-2xl">{dayjs(entry.fallAsleep).format("hh")}</span>
                             <sup>{dayjs(entry.fallAsleep).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
-                            <AlarmIcon className="h-10 w-10" />
+                            <AlarmIcon className="h-10 w-10 text-black dark:text-gray-200" />
                             <span className="text-2xl">{dayjs(entry.timeAwake).format("hh")}</span>
                             <sup>{dayjs(entry.timeAwake).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
-                            <AwakeIcon className="h-10 w-10" />
+                            <AwakeIcon className="h-10 w-10 text-black dark:text-gray-200" />
                             <span className="text-2xl">{dayjs(entry.outOfBed).format("hh")}</span>
                             <sup>{dayjs(entry.outOfBed).format("mm a")}</sup>
                         </p>
                         <p className="hidden md:block">
-                            <TimeAwakeIcon className="h-10 w-10" />
+                            <TimeAwakeIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
                             <span className="text-2xl">{entry.totalTimeAwake?.toFixed(1)}</span>
                             <sup>hrs</sup>
                         </p>
                         <p className="hidden md:block">
-                            <NapIcon className="h-10 w-10" />
+                            <NapIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
                             <span className="text-2xl">{entry.napTime?.toFixed(1)}</span>
                             <sup>hrs</sup>
                         </p>
                         <p>
-                            <SleepDurationIcon className="h-10 w-10" />
+                            <SleepDurationIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
                             <span className="text-2xl">{entry.totalSleep?.toFixed(1)}</span>
                             <sup>hrs</sup>
                         </p>
                         <p>
-                            <InBedDurationIcon className="h-10 w-10" />
+                            <InBedDurationIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
                             <span className="text-2xl">{entry.timeInBed?.toFixed(1)}</span>
                             <sup>hrs</sup>
                         </p>
                     </div>
                 </div>
-                <div className="h-px border-t border-green-700 pt-2" />
+                <div className="h-px border-t border-gray-700 pt-2" />
                 <div className="md:hidden">
                     <button
                         type="button"
-                        className="w-full text-slate-900 cursor-pointer rounded"
+                        className="w-full text-slate-900 cursor-pointer rounded dark:text-gray-200"
                         onClick={toggleModal}
                     >
                         Show Details
@@ -125,9 +125,9 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                     <NotesIcon className="flex-none h-8 w-8" />
                     <p className="w-full text-sm h-10 overflow-x-auto">
                         {entry.notes.length ? (
-                            <span className="text-black">{entry.notes}</span>
+                            <span className="text-black dark:text-gray-200">{entry.notes}</span>
                         ) : (
-                            <span className="text-gray-500">(none)</span>
+                            <span className="text-gray-500 dark:text-gray-400">(none)</span>
                         )}
                     </p>
                 </div>
@@ -135,64 +135,64 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
             {showEntryDetail && (
                 <Modal title={dayjs(entry.id).format("dddd")} onCancel={toggleModal}>
                     <h3 className="text-2xl font-bold text-center">{dayjs(entry.id).format("MMM Do")}&nbsp;</h3>
-                    <div className="h-px border-t border-green-700" />
+                    <div className="h-px border-t border-gray-700" />
                     <div className="flex flex-col justify-center items-center">
                         <div className="grid grid-cols-2 gap-x-16 gap-y-4 px-4">
                             <p className="font-bold">
-                                <SleepEfficiencyIcon className="h-10 w-10" />
+                                <SleepEfficiencyIcon className="h-10 w-10 fill-black" />
                                 <span className="text-2xl">{Math.round(entry.sleepEfficiency)}</span>
                                 <sup>%</sup>
                             </p>
                             <p className="font-bold capitalize">
-                                <SleepQualityIcon className="mb-1 h-10 w-10" />
+                                <SleepQualityIcon className="mb-1 h-10 w-10 fill-black" />
                                 <span>{entry.sleepQuality}</span>
                             </p>
                             <p>
-                                <InBedIcon className="h-10 w-10" />
+                                <InBedIcon className="h-10 w-10 text-black" />
                                 <span className="text-2xl">{dayjs(entry.inBedTime).format("hh")}</span>
                                 <sup>{dayjs(entry.inBedTime).format("mm a")}</sup>
                             </p>
                             <p>
-                                <AsleepIcon className="h-10 w-10" />
+                                <AsleepIcon className="h-10 w-10 text-black" />
                                 <span className="text-2xl">{dayjs(entry.fallAsleep).format("hh")}</span>
                                 <sup>{dayjs(entry.fallAsleep).format("mm a")}</sup>
                             </p>
                             <p>
-                                <AlarmIcon className="h-10 w-10" />
+                                <AlarmIcon className="h-10 w-10 text-black" />
                                 <span className="text-2xl">{dayjs(entry.timeAwake).format("hh")}</span>
                                 <sup>{dayjs(entry.timeAwake).format("mm a")}</sup>
                             </p>
                             <p>
-                                <AwakeIcon className="h-10 w-10" />
+                                <AwakeIcon className="h-10 w-10 text-black" />
                                 <span className="text-2xl">{dayjs(entry.outOfBed).format("hh")}</span>
                                 <sup>{dayjs(entry.outOfBed).format("mm a")}</sup>
                             </p>
                             <p>
-                                <TimeAwakeIcon className="h-10 w-10" />
+                                <TimeAwakeIcon className="h-10 w-10 fill-black" />
                                 <span className="text-2xl">{entry.totalTimeAwake?.toFixed(1)}</span>
                                 <sup>hrs</sup>
                             </p>
                             <p>
-                                <NapIcon className="h-10 w-10" />
+                                <NapIcon className="h-10 w-10 fill-black" />
                                 <span className="text-2xl">{entry.napTime?.toFixed(1)}</span>
                                 <sup>hrs</sup>
                             </p>
                             <p>
-                                <SleepDurationIcon className="h-10 w-10" />
+                                <SleepDurationIcon className="h-10 w-10 fill-black" />
                                 <span className="text-2xl">{entry.totalSleep?.toFixed(1)}</span>
                                 <sup>hrs</sup>
                             </p>
                             <p>
-                                <InBedDurationIcon className="h-10 w-10" />
+                                <InBedDurationIcon className="h-10 w-10 fill-black" />
                                 <span className="text-2xl">{entry.timeInBed?.toFixed(1)}</span>
                                 <sup>hrs</sup>
                             </p>
                         </div>
                     </div>
-                    <div className="h-px border-t border-green-700" />
+                    <div className="h-px border-t border-gray-700" />
                     <div className="flex flex-col justify-center items-center">
-                        <NotesIcon className="h-10 w-10" />
-                        <p className="text-sm">
+                        <NotesIcon className="h-10 w-10 text-black" />
+                        <p className="w-full text-sm h-10 overflow-x-auto">
                             {entry.notes.length ? (
                                 <span className="text-black">{entry.notes}</span>
                             ) : (
