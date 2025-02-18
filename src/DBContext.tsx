@@ -9,7 +9,7 @@ export default function DBProvider({ children }: { children: ReactNode }) {
     const [sleepEntries, setSleepEntries] = useState<Array<SleepEntry>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
-    const [sortByDsc, setSortByDesc] = useState(false);
+    const [sortByDsc, setSortByDesc] = useState(true);
 
     const handleSortBy = useCallback(() => {
         setSortByDesc((p) => !p);
@@ -31,7 +31,7 @@ export default function DBProvider({ children }: { children: ReactNode }) {
                 });
 
                 const entries = (await dbConn.getAll("entries")) || [];
-                setSleepEntries(entries);
+                setSleepEntries(entries.sort((a, b) => b.id - a.id));
 
                 setDb(dbConn);
             } catch (error) {
