@@ -25,7 +25,7 @@ export default function Modal({ children, onCancel, title }: ModalProps) {
                         <div className="flex justify-end rounded-full w-14 mr-1">
                             <button
                                 type="button"
-                                title="Cancel"
+                                title="cancel"
                                 className="cursor-pointer rounded p-3 transition-all hover:bg-black/30 dark:hover:bg-purple-800"
                                 onClick={onCancel}
                             >

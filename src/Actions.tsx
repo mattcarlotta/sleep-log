@@ -149,8 +149,8 @@ export default function Actions() {
             >
                 <div className="flex flex-col space-y-4 m-2">
                     <button
-                        className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
                         type="button"
+                        className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
                         onClick={handleDownloadData}
                     >
                         <div className="flex items-center space-x-2">
@@ -178,8 +178,8 @@ export default function Actions() {
                         />
                     </div>
                     <button
-                        className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
                         type="button"
+                        className="w-full cursor-pointer p-2 text-left rounded hover:bg-gray-300"
                         onClick={handleClearData}
                     >
                         <div className="flex items-center space-x-2">

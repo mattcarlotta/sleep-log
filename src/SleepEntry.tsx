@@ -40,7 +40,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                     <div className="flex items-center justify-end space-x-2">
                         <button
                             type="button"
-                            title="Edit Entry"
+                            title="edit entry"
                             className="p-1 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900"
                             onClick={() => onSetEditForm(entry)}
                         >
@@ -48,7 +48,7 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                         </button>
                         <button
                             type="button"
-                            title="Delete Entry"
+                            title="delete entry"
                             className="p-1 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900"
                             onClick={() => onDeleteEntry(entry.id)}
                         >

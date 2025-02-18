@@ -16,20 +16,20 @@ function App() {
             >
                 Skip to content
             </a>
-            <section className="flex bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100 border-b border-gray-400 p-4 shadow-sm dark:bg-gradient-to-r dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 dark:border-gray-700 sm:justify-center sm:items-center">
+            <nav className="flex bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100 border-b border-gray-400 p-4 shadow-sm dark:bg-gradient-to-r dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 dark:border-gray-700 sm:justify-center sm:items-center">
                 <header className="flex flex-1 flex-row items-center space-x-2 md:justify-center" id="navbar">
                     <h1 className="text-3xl font-bold xs:text-4xl">Sleep Log</h1>
                     <SleepIcon className="h-6 w-6" />
                 </header>
                 <Actions />
-            </section>
+            </nav>
             <main id="main" className="overflow-y-auto">
                 {isLoading ? (
-                    <div className="h-full flex justify-center items-center">
+                    <div className="h-[calc(100%-81px)] flex justify-center items-center">
                         <div title="loading..." className="loader" />
                     </div>
                 ) : error ? (
-                    <div className="h-full flex flex-col items-center justify-center">
+                    <div className="h-[calc(100%-81px)] flex flex-col items-center justify-center">
                         <div className="p-4 text-gray-600 bg-orange-800/10 border border-orange-300 text-center rounded dark:bg-purple-900/50 dark:border-purple-900">
                             <header id="app-error">
                                 <h2 className="text-3xl font-bold text-red-600">

@@ -68,23 +68,28 @@ export default function SleepLog() {
                             </span>
                         </p>
                     </div>
-                    <button
-                        type="button"
-                        className="p-1 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900/50"
-                        onClick={handleSortBy}
-                    >
-                        {!sortByDsc ? (
-                            <SortByAscIcon className="h-10 w-10 text-black dark:text-gray-200" />
-                        ) : (
-                            <SortByDscIcon className="h-10 w-10 text-black dark:text-gray-200" />
-                        )}
-                    </button>
+                    <div className="flex items-center space-x-1">
+                        <p>Sort by:</p>
+                        <button
+                            type="button"
+                            aria-label={`sort by ${!sortByDsc ? "descending" : "ascending"}`}
+                            className="p-0.5 cursor-pointer rounded hover:bg-gray-300 dark:hover:bg-purple-900/50"
+                            onClick={handleSortBy}
+                        >
+                            {!sortByDsc ? (
+                                <SortByDscIcon className="h-10 w-10 text-black dark:text-gray-200" />
+                            ) : (
+                                <SortByAscIcon className="h-10 w-10 text-black dark:text-gray-200" />
+                            )}
+                        </button>
+                    </div>
                 </>
             )}
             <SleepEntries onSetEditForm={handleEditForm} onDeleteEntry={handleDeleteEntry} entries={sleepEntries} />
             {!showForm ? (
                 <button
                     type="button"
+                    title="add entry"
                     className="fixed bottom-4 right-4 text-2xl rounded-full p-3.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl dark:bg-purple-700 dark:hover:bg-purple-900"
                     onClick={() => setShowForm(true)}
                 >

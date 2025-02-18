@@ -19,16 +19,17 @@ export default function SleepEntries({ entries, onDeleteEntry, onSetEditForm }: 
                 <header id="sleep-entries">
                     <h2 className="text-xl text-center font-bold md:text-2xl">Empty Sleep Entries</h2>
                 </header>
-                <p className="text-sm tracking-wider sm:text-base">
-                    To add an entry, press the
-                    <button
-                        type="button"
-                        className="rounded-full p-1.5 mx-1.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl dark:bg-purple-700 dark:hover:bg-purple-900"
+                <div className="flex text-sm tracking-wider sm:text-base">
+                    <p>To add an entry, press the</p>
+                    <div
+                        role="presentation"
+                        aria-label="add entry"
+                        className="min-w-min rounded-full p-1.5 mx-1.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl dark:bg-purple-700 dark:hover:bg-purple-900"
                     >
                         <AddIcon className="h-4 w-4" />
-                    </button>
-                    button.
-                </p>
+                    </div>
+                    <p>button.</p>
+                </div>
             </div>
         );
     }
