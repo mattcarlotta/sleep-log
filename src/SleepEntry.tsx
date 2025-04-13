@@ -60,55 +60,83 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                 <div className="h-px border-t border-gray-700 pt-2" />
                 <div className="flex flex-col justify-center items-center">
                     <div className="grid grid-cols-2 gap-x-10 gap-y-4 px-4">
-                        <p className="font-bold">
+                        <div className="flex flex-col space-y-1 font-bold">
                             <SleepEfficiencyIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
-                            <span className="text-2xl">{Math.round(entry.sleepEfficiency)}</span>
-                            <sup>%</sup>
-                        </p>
-                        <p className="font-bold capitalize">
-                            <SleepQualityIcon className="mb-1 h-10 w-10 fill-black dark:fill-gray-200" />
-                            <span>{entry.sleepQuality}</span>
-                        </p>
-                        <p className="hidden md:block">
+                            <p className="text-[0.45rem]">Sleep Efficiency</p>
+                            <p className="text-2xl">
+                                {Math.round(entry.sleepEfficiency)}
+                                <sup className="text-xs">%</sup>
+                            </p>
+                        </div>
+                        <div className="flex flex-col space-y-1 font-bold capitalize">
+                            <SleepQualityIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
+                            <p className="text-[0.45rem]">Sleep Quality</p>
+                            <p>{entry.sleepQuality}</p>
+                        </div>
+                        <div className="hidden md:flex flex-col space-y-1">
                             <InBedIcon className="h-10 w-10 text-black dark:text-gray-200" />
-                            <span className="text-2xl">{dayjs(entry.inBedTime).format("hh")}</span>
-                            <sup>{dayjs(entry.inBedTime).format("mm a")}</sup>
-                        </p>
-                        <p className="hidden md:block">
+                            <p className="text-[0.45rem]">In Bed Time</p>
+                            <p className="text-2xl">
+                                {dayjs(entry.inBedTime).format("hh")}
+                                <sup className="text-xs">{dayjs(entry.inBedTime).format("mm a")}</sup>
+                            </p>
+                        </div>
+                        <div className="hidden md:flex flex-col space-y-1">
                             <AsleepIcon className="h-10 w-10 text-black dark:text-gray-200" />
-                            <span className="text-2xl">{dayjs(entry.fallAsleep).format("hh")}</span>
-                            <sup>{dayjs(entry.fallAsleep).format("mm a")}</sup>
-                        </p>
-                        <p className="hidden md:block">
+                            <p className="text-[0.45rem]">Fall Asleep</p>
+                            <p className="text-2xl">
+                                {dayjs(entry.fallAsleep).format("hh")}
+                                <sup className="text-xs">{dayjs(entry.fallAsleep).format("mm a")}</sup>
+                            </p>
+                        </div>
+                        <div className="hidden md:flex flex-col space-y-1">
                             <AlarmIcon className="h-10 w-10 text-black dark:text-gray-200" />
-                            <span className="text-2xl">{dayjs(entry.timeAwake).format("hh")}</span>
-                            <sup>{dayjs(entry.timeAwake).format("mm a")}</sup>
-                        </p>
-                        <p className="hidden md:block">
+                            <p className="text-[0.45rem]">Awaken</p>
+                            <p className="text-2xl">
+                                {dayjs(entry.timeAwake).format("hh")}
+                                <sup className="text-xs">{dayjs(entry.timeAwake).format("mm a")}</sup>
+                            </p>
+                        </div>
+                        <div className="hidden md:flex flex-col space-y-1">
                             <AwakeIcon className="h-10 w-10 text-black dark:text-gray-200" />
-                            <span className="text-2xl">{dayjs(entry.outOfBed).format("hh")}</span>
-                            <sup>{dayjs(entry.outOfBed).format("mm a")}</sup>
-                        </p>
-                        <p className="hidden md:block">
+                            <p className="text-[0.45rem]">Out Of Bed</p>
+                            <p className="text-2xl">
+                                {dayjs(entry.outOfBed).format("hh")}
+                                <sup className="text-xs">{dayjs(entry.outOfBed).format("mm a")}</sup>
+                            </p>
+                        </div>
+                        <div className="hidden md:flex flex-col space-y-1">
                             <TimeAwakeIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
-                            <span className="text-2xl">{entry.totalTimeAwake?.toFixed(1)}</span>
-                            <sup>hrs</sup>
-                        </p>
-                        <p className="hidden md:block">
+                            <p className="text-[0.45rem]">Awake In Bed</p>
+                            <p className="text-2xl">
+                                {entry.totalTimeAwake?.toFixed(2)}
+                                <sup className="text-xs">hrs</sup>
+                            </p>
+                        </div>
+                        <div className="hidden md:flex flex-col space-y-1">
                             <NapIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
-                            <span className="text-2xl">{entry.napTime?.toFixed(1)}</span>
-                            <sup>hrs</sup>
-                        </p>
-                        <p>
+                            <p className="text-[0.45rem]">Nap Time</p>
+                            <p className="text-2xl">
+                                {entry.napTime?.toFixed(1)}
+                                <sup className="text-xs">hrs</sup>
+                            </p>
+                        </div>
+                        <div className="flex flex-col space-y-1">
                             <SleepDurationIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
-                            <span className="text-2xl">{entry.totalSleep?.toFixed(1)}</span>
-                            <sup>hrs</sup>
-                        </p>
-                        <p>
+                            <p className="text-[0.45rem]">Sleep Duration</p>
+                            <p className="text-2xl">
+                                {entry.totalSleep?.toFixed(1)}
+                                <sup className="text-xs">hrs</sup>
+                            </p>
+                        </div>
+                        <div className="flex flex-col space-y-1">
                             <InBedDurationIcon className="h-10 w-10 fill-black dark:fill-gray-200" />
-                            <span className="text-2xl">{entry.timeInBed?.toFixed(1)}</span>
-                            <sup>hrs</sup>
-                        </p>
+                            <p className="text-[0.45rem]">In Bed Duration</p>
+                            <p className="text-2xl">
+                                {entry.timeInBed?.toFixed(1)}
+                                <sup className="text-xs">hrs</sup>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div className="h-px border-t border-gray-700 pt-2" />
@@ -138,55 +166,83 @@ export default function SleepEntry({ entry, onSetEditForm, onDeleteEntry }: Slee
                     <div className="h-px border-t border-gray-700" />
                     <div className="flex flex-col justify-center items-center">
                         <div className="grid grid-cols-2 gap-x-16 gap-y-4 px-4">
-                            <p className="font-bold">
+                            <div className="flex flex-col space-y-1 font-bold">
                                 <SleepEfficiencyIcon className="h-10 w-10 fill-black" />
-                                <span className="text-2xl">{Math.round(entry.sleepEfficiency)}</span>
-                                <sup>%</sup>
-                            </p>
-                            <p className="font-bold capitalize">
-                                <SleepQualityIcon className="mb-1 h-10 w-10 fill-black" />
-                                <span>{entry.sleepQuality}</span>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Sleep Efficiency</p>
+                                <p className="text-2xl">
+                                    {Math.round(entry.sleepEfficiency)}
+                                    <sup className="text-xs">%</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1 font-bold capitalize">
+                                <SleepQualityIcon className="h-10 w-10 fill-black" />
+                                <p className="text-[0.45rem]">Sleep Quality</p>
+                                <p>{entry.sleepQuality}</p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <InBedIcon className="h-10 w-10 text-black" />
-                                <span className="text-2xl">{dayjs(entry.inBedTime).format("hh")}</span>
-                                <sup>{dayjs(entry.inBedTime).format("mm a")}</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">In Bed Time</p>
+                                <p className="text-2xl">
+                                    {dayjs(entry.inBedTime).format("hh")}
+                                    <sup className="text-xs">{dayjs(entry.inBedTime).format("mm a")}</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <AsleepIcon className="h-10 w-10 text-black" />
-                                <span className="text-2xl">{dayjs(entry.fallAsleep).format("hh")}</span>
-                                <sup>{dayjs(entry.fallAsleep).format("mm a")}</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Fall Asleep</p>
+                                <p className="text-2xl">
+                                    {dayjs(entry.fallAsleep).format("hh")}
+                                    <sup className="text-xs">{dayjs(entry.fallAsleep).format("mm a")}</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <AlarmIcon className="h-10 w-10 text-black" />
-                                <span className="text-2xl">{dayjs(entry.timeAwake).format("hh")}</span>
-                                <sup>{dayjs(entry.timeAwake).format("mm a")}</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Awaken</p>
+                                <p className="text-2xl">
+                                    {dayjs(entry.timeAwake).format("hh")}
+                                    <sup className="text-xs">{dayjs(entry.timeAwake).format("mm a")}</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <AwakeIcon className="h-10 w-10 text-black" />
-                                <span className="text-2xl">{dayjs(entry.outOfBed).format("hh")}</span>
-                                <sup>{dayjs(entry.outOfBed).format("mm a")}</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Out Of Bed</p>
+                                <p className="text-2xl">
+                                    {dayjs(entry.outOfBed).format("hh")}
+                                    <sup className="text-xs">{dayjs(entry.outOfBed).format("mm a")}</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <TimeAwakeIcon className="h-10 w-10 fill-black" />
-                                <span className="text-2xl">{entry.totalTimeAwake?.toFixed(1)}</span>
-                                <sup>hrs</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Awake In Bed</p>
+                                <p className="text-2xl">
+                                    {entry.totalTimeAwake?.toFixed(2)}
+                                    <sup className="text-xs">hrs</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <NapIcon className="h-10 w-10 fill-black" />
-                                <span className="text-2xl">{entry.napTime?.toFixed(1)}</span>
-                                <sup>hrs</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Nap Time</p>
+                                <p className="text-2xl">
+                                    {entry.napTime?.toFixed(1)}
+                                    <sup className="text-xs">hrs</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <SleepDurationIcon className="h-10 w-10 fill-black" />
-                                <span className="text-2xl">{entry.totalSleep?.toFixed(1)}</span>
-                                <sup>hrs</sup>
-                            </p>
-                            <p>
+                                <p className="text-[0.45rem]">Sleep Duration</p>
+                                <p className="text-2xl">
+                                    {entry.totalSleep?.toFixed(1)}
+                                    <sup className="text-xs">hrs</sup>
+                                </p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
                                 <InBedDurationIcon className="h-10 w-10 fill-black" />
-                                <span className="text-2xl">{entry.timeInBed?.toFixed(1)}</span>
-                                <sup>hrs</sup>
-                            </p>
+                                <p className="text-[0.45rem]">In Bed Duration</p>
+                                <p className="text-2xl">
+                                    {entry.timeInBed?.toFixed(1)}
+                                    <sup className="text-xs">hrs</sup>
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <div className="h-px border-t border-gray-700" />

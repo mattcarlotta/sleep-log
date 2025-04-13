@@ -35,6 +35,15 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
         setSleepLog((p) => ({ ...p, [name]: value.second(0).millisecond(0) }));
     };
 
+    const getFallSleepHoursDiff = () => {
+        const timeInBed = new Date(sleepLog.inBedTime).getTime();
+        const fallAsleep = new Date(sleepLog.fallAsleep).getTime();
+
+        const diffInMS = Math.abs(fallAsleep - timeInBed);
+
+        return diffInMS / (1000 * 60 * 60);
+    };
+
     const handleFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setFormError("");
@@ -57,7 +66,7 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                 timeInBed,
                 outOfBed: sleepLog.outOfBed.toISOString(),
                 totalSleep,
-                totalTimeAwake: sleepLog.totalTimeAwake,
+                totalTimeAwake: sleepLog.totalTimeAwake || getFallSleepHoursDiff(),
                 sleepEfficiency,
                 sleepQuality: sleepLog.sleepQuality,
                 napTime: sleepLog.napTime,
@@ -135,8 +144,9 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             className="w-full py-3.5 pl-3.5 border border-gray-400 rounded"
                             name="totalTimeAwake"
                             type="number"
-                            step="0.1"
-                            value={sleepLog.totalTimeAwake}
+                            step="0.01"
+                            min={getFallSleepHoursDiff()}
+                            value={sleepLog.totalTimeAwake || getFallSleepHoursDiff()}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -149,7 +159,7 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             className="w-full py-3.5 pl-3.5 border border-gray-400 rounded"
                             name="napTime"
                             type="number"
-                            step="0.1"
+                            step="0.01"
                             value={sleepLog.napTime}
                             onChange={handleInputChange}
                         />
