@@ -38,10 +38,9 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
     const getFallSleepHoursDiff = () => {
         const timeInBed = new Date(sleepLog.inBedTime).getTime();
         const fallAsleep = new Date(sleepLog.fallAsleep).getTime();
-
         const diffInMS = Math.abs(fallAsleep - timeInBed);
 
-        return diffInMS / (1000 * 60 * 60);
+        return Math.floor((diffInMS / (1000 * 60 * 60)) * 100) / 100;
     };
 
     const handleFormSubmit = async (e: FormEvent) => {

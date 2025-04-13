@@ -30,8 +30,8 @@ export default function DBProvider({ children }: { children: ReactNode }) {
                     }
                 });
 
-                const entries = (await dbConn.getAll("entries")) || [];
-                setSleepEntries(entries.sort((a, b) => b.id - a.id));
+                const entries = await dbConn.getAll("entries");
+                setSleepEntries(entries?.sort((a, b) => b.id - a.id));
 
                 setDb(dbConn);
             } catch (error) {
