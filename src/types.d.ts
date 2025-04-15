@@ -7,7 +7,7 @@ export type SleepLog = {
     fallAsleep: Dayjs;
     timeAwake: Dayjs;
     outOfBed: Dayjs;
-    totalTimeAwake: number;
+    totalTimeAwake: number | undefined;
     sleepQuality: string;
     napTime: number;
     notes: string;

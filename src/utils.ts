@@ -6,7 +6,7 @@ export const initialState = {
     fallAsleep: dayjs().subtract(1, "day").endOf("day"),
     timeAwake: dayjs(),
     outOfBed: dayjs(),
-    totalTimeAwake: 0.0,
+    totalTimeAwake: undefined,
     sleepQuality: "",
     napTime: 0,
     notes: ""

@@ -20,7 +20,7 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
     const [formError, setFormError] = useState("");
 
     const timeInBed = sleepLog.outOfBed ? sleepLog.outOfBed.diff(sleepLog.inBedTime, "hours", true) : 0;
-    const totalSleep = timeInBed - sleepLog.totalTimeAwake;
+    const totalSleep = timeInBed - (sleepLog.totalTimeAwake || 0);
     const sleepEfficiency = totalSleep > 0 ? (totalSleep / timeInBed) * 100 : 0;
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +49,10 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
         try {
             if (!sleepLog.sleepQuality) {
                 throw new Error("You must choose a quality of sleep option!");
+            }
+
+            if (typeof sleepLog.totalTimeAwake === "undefined") {
+                throw new Error("You must set the total time awake!");
             }
 
             const entryId = dayjs(sleepLog.id).startOf("day").valueOf();
@@ -144,8 +148,9 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             name="totalTimeAwake"
                             type="number"
                             step="0.01"
+                            placeholder={getFallSleepHoursDiff().toString()}
                             min={getFallSleepHoursDiff()}
-                            value={sleepLog.totalTimeAwake || getFallSleepHoursDiff()}
+                            value={sleepLog.totalTimeAwake}
                             onChange={handleInputChange}
                         />
                     </div>
