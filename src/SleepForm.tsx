@@ -181,7 +181,8 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                         <select
                             name="sleepQuality"
                             id="sleep-quality"
-                            className="w-full py-4 pl-3.5 border border-gray-400 rounded"
+                            className="w-full py-4 pl-3.5 pr-10 border border-gray-400 rounded appearance-none bg-white"
+                            style={{ WebkitAppearance: "none", appearance: "none" }}
                             value={sleepLog.sleepQuality}
                             onChange={handleFieldChange}
                         >
