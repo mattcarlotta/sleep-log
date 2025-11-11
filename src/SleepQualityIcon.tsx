@@ -1,7 +1,6 @@
 export default function SleepQualityIcon({ className }: { className?: string }) {
     return (
-        <svg className={className} viewBox="-3 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <title>Sleep Quality</title>
+        <svg aria-hidden className={className} viewBox="-3 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g transform="translate(-100.000000, -2839.000000)" fill="currentColor">
                     <g transform="translate(56.000000, 160.000000)">

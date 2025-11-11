@@ -1,5 +1,6 @@
 import type { SleepLog } from "./types";
 import { useMemo, useState } from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,10 +12,74 @@ import SortByAscIcon from "./SortByAscIcon";
 import SortByDscIcon from "./SortByDscIcon";
 import useDBContext from "./useDBContext";
 import { initialState } from "./utils";
+import useScrollLock from "./useScrollLock";
+import { useMediaQuery } from "@mui/material";
+
+const darkTheme = createTheme({
+    palette: {
+        mode: "dark",
+        primary: {
+            main: "#90caf9"
+        },
+        background: {
+            paper: "#1e1e1e",
+            default: "#121212"
+        }
+    },
+    components: {
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    "& fieldset": {
+                        borderColor: "#99a1af"
+                    },
+                    "&:hover fieldset": {
+                        borderColor: theme.palette.text.primary
+                    },
+                    "&.Mui-focused fieldset": {
+                        borderColor: theme.palette.primary.main
+                    }
+                })
+            }
+        }
+    }
+});
+
+const lightTheme = createTheme({
+    palette: {
+        mode: "light",
+        primary: {
+            main: "#1976d2"
+        },
+        background: {
+            paper: "#ffffff",
+            default: "#fafafa"
+        }
+    },
+    components: {
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    "& fieldset": {
+                        borderColor: "#99a1af"
+                    },
+                    "&:hover fieldset": {
+                        borderColor: theme.palette.text.primary
+                    },
+                    "&.Mui-focused fieldset": {
+                        borderColor: theme.palette.primary.main
+                    }
+                })
+            }
+        }
+    }
+});
 
 export default function SleepLog() {
+    const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+    const theme = prefersDark ? darkTheme : lightTheme;
     const { db, sortByDsc, handleSortBy, sleepEntries, syncSleepEntries } = useDBContext();
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useScrollLock();
     const [formFields, setFormFields] = useState<SleepLog>(initialState);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -96,9 +161,11 @@ export default function SleepLog() {
                     <AddIcon className="h-8 w-8" />
                 </button>
             ) : (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <SleepForm onFormCancel={handleFormCancel} isEditing={isEditing} {...formFields} />
-                </LocalizationProvider>
+                <ThemeProvider theme={theme}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <SleepForm onFormCancel={handleFormCancel} isEditing={isEditing} {...formFields} />
+                    </LocalizationProvider>
+                </ThemeProvider>
             )}
         </div>
     );

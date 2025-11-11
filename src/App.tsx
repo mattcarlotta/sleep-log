@@ -16,7 +16,7 @@ function App() {
             >
                 Skip to content
             </a>
-            <nav className="flex bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100 border-b border-gray-400 p-4 shadow-sm dark:bg-gradient-to-r dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 dark:border-gray-700 sm:justify-center sm:items-center">
+            <nav className="flex bg-linear-to-r/decreasing from-indigo-500 to-teal-400 text-slate-100 border-b border-gray-400 p-4 shadow-sm dark:bg-linear-to-r dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 dark:border-gray-700 sm:justify-center sm:items-center">
                 <header className="flex flex-1 flex-row items-center space-x-2 md:justify-center" id="navbar">
                     <h1 className="text-3xl font-bold xs:text-4xl">Sleep Log</h1>
                     <SleepIcon className="h-6 w-6" />

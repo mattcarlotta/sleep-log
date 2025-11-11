@@ -98,10 +98,10 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
 
     return (
         <Modal title="Sleep Log Entry" onCancel={onFormCancel}>
-            <div className="flex flex-col justify-center items-center space-x-6 md:space-x-0 sm:items-start sm:grid sm:grid-cols-2 md:gap-x-6">
-                <form onSubmit={handleFormSubmit} className="space-y-4">
-                    <div>
-                        <p className="text-sm font-bold">What day is this entry for?</p>
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+                <div className="sm:flex-col sm:justify-center space-x-6 md:space-x-0 sm:items-start sm:grid sm:grid-cols-2 md:gap-x-6 space-y-4">
+                    <div className="w-full">
+                        <p className="text-sm font-bold dark:text-white">What day is this entry for?</p>
                         <DatePicker
                             className="w-full"
                             readOnly={isEditing}
@@ -109,16 +109,16 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             onChange={(v) => handleDateChange("id", v)}
                         />
                     </div>
-                    <div>
-                        <p className="text-sm font-bold">What time did you get into bed?</p>
+                    <div className="w-full">
+                        <p className="text-sm font-bold dark:text-white">What time did you get into bed?</p>
                         <DateTimePicker
                             className="w-full"
                             value={sleepLog.inBedTime}
                             onChange={(v) => handleDateChange("inBedTime", v)}
                         />
                     </div>
-                    <div>
-                        <p className="text-sm font-bold">What time did you fall asleep?</p>
+                    <div className="w-full">
+                        <p className="text-sm font-bold dark:text-white">What time did you fall asleep?</p>
                         <DateTimePicker
                             className="w-full"
                             value={sleepLog.fallAsleep}
@@ -126,8 +126,8 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             minDateTime={sleepLog.inBedTime}
                         />
                     </div>
-                    <div>
-                        <p className="text-sm font-bold">What time did you awake?</p>
+                    <div className="w-full">
+                        <p className="text-sm font-bold dark:text-white">What time did you awake?</p>
                         <DateTimePicker
                             className="w-full"
                             value={sleepLog.timeAwake}
@@ -135,8 +135,8 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             minDateTime={sleepLog.fallAsleep}
                         />
                     </div>
-                    <div>
-                        <p className="text-sm font-bold">What time did you get out of bed?</p>
+                    <div className="w-full">
+                        <p className="text-sm font-bold dark:text-white">What time did you get out of bed?</p>
                         <DateTimePicker
                             className="w-full"
                             value={sleepLog.outOfBed}
@@ -144,29 +144,29 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             minDateTime={sleepLog.timeAwake}
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-bold" htmlFor="total-time-awake">
+                    <div className="w-full">
+                        <label className="block text-sm font-bold dark:text-white" htmlFor="total-time-awake">
                             Time awake in bed (in hours):
                         </label>
                         <input
                             id="total-time-awake"
-                            className="w-full py-3.5 pl-3.5 border border-gray-400 rounded"
+                            className="w-full py-3.5 pl-3.5 border border-gray-400 rounded dark:placeholder:text-gray-500 dark:text-white dark:hover:border-white"
                             name="totalTimeAwake"
                             type="number"
                             step="0.01"
                             placeholder={getFallSleepHoursDiff().toString()}
                             min={getFallSleepHoursDiff()}
-                            value={sleepLog.totalTimeAwake}
+                            value={sleepLog.totalTimeAwake || ""}
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-bold" htmlFor="nap-time">
+                    <div className="w-full">
+                        <label className="block text-sm font-bold dark:text-white" htmlFor="nap-time">
                             Nap time (in hours):
                         </label>
                         <input
                             id="nap-time"
-                            className="w-full py-3.5 pl-3.5 border border-gray-400 rounded"
+                            className="w-full py-3.5 pl-3.5 border border-gray-400 rounded dark:placeholder:text-gray-500 dark:text-white dark:hover:border-white"
                             name="napTime"
                             type="number"
                             step="0.01"
@@ -174,19 +174,21 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-bold" htmlFor="sleep-quality">
+                    <div className="w-full">
+                        <label className="block text-sm font-bold dark:text-white" htmlFor="sleep-quality">
                             Quality of sleep:
                         </label>
                         <select
                             name="sleepQuality"
                             id="sleep-quality"
-                            className="w-full py-4 pl-3.5 pr-10 border border-gray-400 rounded appearance-none bg-white"
+                            className="w-full py-3.5 pl-3.5 border border-gray-400 rounded appearance-none bg-white dark:bg-transparent dark:text-white dark:hover:border-white"
                             style={{ WebkitAppearance: "none", appearance: "none" }}
                             value={sleepLog.sleepQuality}
                             onChange={handleFieldChange}
                         >
-                            <option value="">Please choose an option</option>
+                            <option value="" disabled>
+                                Please choose an option
+                            </option>
                             <option value="very poor">Very Poor</option>
                             <option value="poor">Poor</option>
                             <option value="fair">Fair</option>
@@ -194,65 +196,50 @@ export default function SleepLog({ onFormCancel, isEditing, ...formFields }: Sle
                             <option value="very good">Very Good</option>
                         </select>
                     </div>
-                    <div>
-                        <label className="block text-sm font-bold" htmlFor="notes">
-                            Notes:
-                        </label>
-                        <textarea
-                            id="notes"
-                            name="notes"
-                            className="w-full p-1 border border-gray-400 rounded"
-                            value={sleepLog.notes}
-                            onChange={handleFieldChange}
-                        />
-                    </div>
                     <ReadOnlyTextInput
-                        className="sm:hidden"
+                        className="w-full"
                         id="time-asleep"
                         label="Sleep duration in bed:"
                         value={`${totalSleep?.toFixed(1)} hours`}
                     />
                     <ReadOnlyTextInput
-                        className="w-full sm:hidden"
+                        className="w-full"
                         id="time-in-bed"
                         label="Time spent in bed:"
                         value={`${timeInBed?.toFixed(1)} hours`}
                     />
                     <ReadOnlyTextInput
-                        className="sm:hidden"
-                        id="sleep-efficiency"
-                        label="Sleep efficiency:"
-                        value={`${Math.round(sleepEfficiency)}%`}
-                    />
-                    {formError.length > 0 && <p className="text-red-500 font-semibold w-64">{formError}</p>}
-                    <div>
-                        <button
-                            type="submit"
-                            className="w-full flex justify-center items-center cursor-pointer rounded bg-blue-600 p-2.5 text-white text-lg font-semibold hover:bg-blue-700 dark:bg-purple-800 dark:hover:bg-purple-900"
-                        >
-                            <SaveIcon className="h-6 w-6 fill-white" />
-                            &nbsp;{isEditing ? "Update" : "Save"} Entry
-                        </button>
-                    </div>
-                </form>
-                <div className="hidden sm:block space-y-4">
-                    <ReadOnlyTextInput
-                        id="time-asleep"
-                        label="Sleep duration in bed:"
-                        value={`${totalSleep?.toFixed(1)} hours`}
-                    />
-                    <ReadOnlyTextInput
-                        id="time-in-bed"
-                        label="Time spent in bed:"
-                        value={`${timeInBed?.toFixed(1)} hours`}
-                    />
-                    <ReadOnlyTextInput
+                        className="w-full"
                         id="sleep-efficiency"
                         label="Sleep efficiency:"
                         value={`${Math.round(sleepEfficiency)}%`}
                     />
                 </div>
-            </div>
+                <div>
+                    <label className="block text-sm font-bold dark:text-white" htmlFor="notes">
+                        Notes:
+                    </label>
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        rows={10}
+                        className="w-full px-3 pb-3 pt-1 border border-gray-400 rounded dark:text-white dark:placeholder:text-gray-500 dark:hover:border-white"
+                        placeholder="Enter any optional notes..."
+                        value={sleepLog.notes}
+                        onChange={handleFieldChange}
+                    />
+                </div>
+                {formError.length > 0 && <p className="text-red-500 font-semibold w-64">{formError}</p>}
+                <div>
+                    <button
+                        type="submit"
+                        className="w-full flex justify-center items-center cursor-pointer rounded bg-blue-600 p-2.5 text-white text-lg font-semibold hover:bg-blue-700 dark:bg-purple-800 dark:hover:bg-purple-900"
+                    >
+                        <SaveIcon className="h-6 w-6 fill-white" />
+                        &nbsp;{isEditing ? "Update" : "Save"} Entry
+                    </button>
+                </div>
+            </form>
         </Modal>
     );
 }

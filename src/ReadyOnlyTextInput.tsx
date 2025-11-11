@@ -8,12 +8,12 @@ type ReadOnlyTextInputProps = {
 export default function ReadOnlyTextInput({ className, id, label, value }: ReadOnlyTextInputProps) {
     return (
         <div className={className}>
-            <label className="block text-sm font-bold" htmlFor={id}>
+            <label className="block text-sm font-bold dark:text-white" htmlFor={id}>
                 {label}
             </label>
             <input
                 id={id}
-                className="cursor-not-allowed w-full pt-3.5 pb-4 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300"
+                className="cursor-not-allowed w-full pt-3.5 pb-4 pl-3.5 pr-6 border border-gray-400 rounded bg-gray-300 dark:bg-gray-600 dark:text-white"
                 type="text"
                 readOnly
                 value={value}
