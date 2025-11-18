@@ -158,7 +158,7 @@ export default function SleepLog() {
                     className="fixed bottom-4 right-4 text-2xl rounded-full p-3.5 transition-all cursor-pointer bg-blue-600 hover:bg-blue-700 hover:shadow-2xl dark:bg-purple-700 dark:hover:bg-purple-900"
                     onClick={() => setShowForm(true)}
                 >
-                    <AddIcon className="h-8 w-8" />
+                    <AddIcon className="h-8 w-8 text-white" />
                 </button>
             ) : (
                 <ThemeProvider theme={theme}>

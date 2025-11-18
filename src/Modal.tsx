@@ -33,7 +33,7 @@ export default function Modal({ children, onCancel, title }: ModalProps) {
                             </button>
                         </div>
                     </div>
-                    <div className="flex-1 space-y-4 overflow-y-auto p-5 relative overflow-x-hidden bg-white dark:bg-gray-900 sm:h-auto dark:text-white">
+                    <div className="flex-1 space-y-4 overflow-y-auto p-5 relative overflow-x-hidden bg-light dark:bg-dark sm:h-auto dark:text-white">
                         {children}
                     </div>
                     <div className="flex flex-initial border-t border-b border-gray-300 bg-linear-to-r/decreasing from-indigo-500 to-teal-400 p-4 dark:bg-linear-to-r dark:from-gray-700 dark:via-purple-800 dark:to-gray-700 dark:border-gray-700" />
